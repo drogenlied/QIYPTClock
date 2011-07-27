@@ -5,6 +5,7 @@
 #include <QtGui/QGraphicsScene>
 #include <QtSvg/QSvgRenderer>
 #include <QtSvg/QGraphicsSvgItem>
+#include <QtGui/QGraphicsEllipseItem>
 
 class ThemeClockWidget : public QGraphicsView
 {
@@ -13,10 +14,19 @@ class ThemeClockWidget : public QGraphicsView
 public:
     ThemeClockWidget(QWidget *parent = 0);
     ~ThemeClockWidget();
+    int getTime();
+    int getAllowedTime();
+public slots:
+    void act();
+    void setAllowedTime(int ms);
+    void setTime(int ms);
 private:
-    QGraphicsScene *scene;
-    QSvgRenderer *renderer;
-    QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
+    QGraphicsScene *nscene;
+    //QSvgRenderer *renderer;
+    //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
+    QGraphicsEllipseItem *fg, *mg, *bg;
+    int time, maxtime;
+    void resizeEvent(QResizeEvent *event);
 };
 
 #endif

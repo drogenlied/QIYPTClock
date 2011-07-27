@@ -7,7 +7,9 @@ QT += svg \
 TARGET = iyptclock
 TEMPLATE = app
 SOURCES += main.cpp \
-    mainwindow.cpp
-HEADERS += mainwindow.h
+    mainwindow.cpp \
+    themeclock.cpp
+HEADERS += mainwindow.h \
+    themeclock.h
 FORMS += mainwindow.ui
 include(themeclockwidget.pri)
