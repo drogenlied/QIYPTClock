@@ -24,7 +24,7 @@ private:
     QGraphicsScene *nscene;
     //QSvgRenderer *renderer;
     //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
-    QGraphicsEllipseItem *fg, *mg, *bg;
+    QGraphicsEllipseItem *fg, *mg, *bg, *focus;
     int time, maxtime;
     void resizeEvent(QResizeEvent *event);
 };

@@ -14,18 +14,26 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     fg->setStartAngle(90*16);
     fg->setSpanAngle(-50*16);
     fg->setBrush(QBrush(QColor(255,0,0)));
+    fg->setPen(QPen(QColor(0,0,0,0)));
 
     mg = new QGraphicsEllipseItem(0,0,300,300);
     mg->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     mg->setStartAngle(90*16);
     mg->setSpanAngle(-5*16);
     mg->setBrush(QBrush(QColor(255,99,0)));
+    mg->setPen(QPen(QColor(0,0,0,0)));
+
 
     bg = new QGraphicsEllipseItem(0,0,300,300);
     bg->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     bg->setStartAngle(90*16);
     bg->setSpanAngle(-130*16);
     bg->setBrush(QBrush(QColor(0,255,0)));
+    bg->setPen(QPen(QColor(0,0,0,0)));
+
+    focus = new QGraphicsEllipseItem(0,0,300,300);
+    focus->setPen(QPen(QColor(0,0,0,0)));
+
 
     time = 0;
     maxtime = 1;
@@ -62,6 +70,7 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     oend->setElementId(QLatin1String("overtime-end"));
     oend->setParentItem(overtime);
 */
+    scene()->addItem(focus);
     scene()->addItem(bg);
     scene()->addItem(mg);
     scene()->addItem(fg);
@@ -80,14 +89,15 @@ ThemeClockWidget::~ThemeClockWidget() {
     delete renderer;
     */
 
+    delete focus;
     delete bg;
     delete mg;
     delete fg;
 }
 
 void ThemeClockWidget::resizeEvent(QResizeEvent *event){
-    this->centerOn(bg);
-    //this->fitInView(bg);
+    this->fitInView(focus, Qt::KeepAspectRatio);
+    this->centerOn(focus);
 }
 
 void ThemeClockWidget::act(){
