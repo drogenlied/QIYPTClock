@@ -8,8 +8,10 @@ TARGET = iyptclock
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    themeclock.cpp
+    themeclock.cpp \
+    listcontroller.cpp
 HEADERS += mainwindow.h \
-    themeclock.h
+    themeclock.h \
+    listcontroller.h
 FORMS += mainwindow.ui
 include(themeclockwidget.pri)
