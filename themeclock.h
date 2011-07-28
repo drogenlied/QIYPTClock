@@ -19,10 +19,12 @@ signals:
     void timeUpdate(QString);
     void started(int);
     void paused(int);
+    void stopped(int);
     void restarted(int);
 
 public slots:
     void startorpause();
+    void stop();
     void reset();
     void setAllowedTime(int ms);
     void pulse();

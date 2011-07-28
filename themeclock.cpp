@@ -29,6 +29,12 @@ void ThemeClock::startorpause(){
     emit allowedTimeChanged(maxtime);
 }
 
+void ThemeClock::stop(){
+    savedtime = 0;
+    running = false;
+    emit stopped(0);
+}
+
 void ThemeClock::reset(){
     savedtime = 0;
     t->restart();
