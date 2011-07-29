@@ -10,10 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->setRenderHint(QPainter::SmoothPixmapTransform);
-
-
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
     timer->start(100);
@@ -34,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->ffwd, SIGNAL(clicked()), lc, SLOT(forward()));
     connect(ui->bwd, SIGNAL(clicked()), lc, SLOT(backward()));
-    connect(lc, SIGNAL(newAllowedTime(int)), thc, SLOT(setAllowedTime(int)));
+    connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
 
     thc->setAllowedTime(20000);
