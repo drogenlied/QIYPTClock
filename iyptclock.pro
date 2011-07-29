@@ -3,15 +3,17 @@
 # -------------------------------------------------
 QT += svg \
     phonon \
-    dbus
+    network
 TARGET = iyptclock
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     themeclock.cpp \
-    listcontroller.cpp
+    listcontroller.cpp \
+    broadcastserver.cpp
 HEADERS += mainwindow.h \
     themeclock.h \
-    listcontroller.h
+    listcontroller.h \
+    broadcastserver.h
 FORMS += mainwindow.ui
 include(themeclockwidget.pri)
