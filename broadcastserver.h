@@ -16,7 +16,7 @@ signals:
 
 public slots:
     void setStageName(QString);
-    void setAllowdTime(int);
+    void setAllowedTime(int);
     void updateTime(int);
     void setBroadcastPort(int);
 
