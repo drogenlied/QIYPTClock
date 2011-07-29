@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "themeclock.h"
 #include "listcontroller.h"
+#include "broadcastserver.h"
 #include <QtCore/QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -32,6 +33,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->bwd, SIGNAL(clicked()), lc, SLOT(backward()));
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
+
+    BroadcastServer *bs = new BroadcastServer();
+
+    connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
+    connect(thc, SIGNAL(allowedTimeChanged(int)), bs, SLOT(setAllowedTime(int)));
+    connect(lc, SIGNAL(stageNameChanged(QString)), bs, SLOT(setStageName(QString)));
 
     thc->setAllowedTime(20000);
 
