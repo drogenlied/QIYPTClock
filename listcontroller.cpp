@@ -20,3 +20,7 @@ void ListController::backward(){
 int ListController::loadListFromFile(QString path){
     return 0;
 }
+
+int ListController::saveToFile(QString path){
+    return 0;
+}

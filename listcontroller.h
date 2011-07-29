@@ -12,8 +12,9 @@ public:
     int loadListFromFile(QString path);
 
 signals:
-    void newAllowedTime(int);
+    void allowedTimeChanged(int);
     void resetTime();
+    void stageNameChanged(QString);
 
 public slots:
     void forward();
