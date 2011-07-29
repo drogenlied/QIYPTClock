@@ -10,6 +10,7 @@ public:
     explicit ListController(QObject *parent = 0);
     ~ListController();
     int loadListFromFile(QString path);
+    int saveListToFile(QString path);
 
 signals:
     void allowedTimeChanged(int);

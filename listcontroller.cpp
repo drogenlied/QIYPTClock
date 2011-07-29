@@ -21,6 +21,6 @@ int ListController::loadListFromFile(QString path){
     return 0;
 }
 
-int ListController::saveToFile(QString path){
+int ListController::saveListToFile(QString path){
     return 0;
 }
