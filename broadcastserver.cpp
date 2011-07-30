@@ -1,7 +1,6 @@
 #include "broadcastserver.h"
 #include <QDataStream>
 #include <QtNetwork>
-#include <QDataStream>
 
 BroadcastServer::BroadcastServer(QObject *parent, unsigned int p) :
     QObject(parent)
@@ -48,6 +47,6 @@ void BroadcastServer::broadcast(){
     dgstream << (quint32)allowedtime;
     dgstream << (quint32)time;
     dgstream << stagename;
-    qDebug("dgram: %d", datagram.size());
+    //qDebug("dgram: %d", datagram.size());
     udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, port);
 }
