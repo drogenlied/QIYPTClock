@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
-    timer->start(100);
+    timer->start(30);
 
     ThemeClock *thc = new ThemeClock();
 

@@ -7,7 +7,7 @@ ThemeClock::ThemeClock(QObject *parent) :
     connect(renew, SIGNAL(timeout()), this, SLOT(pulse()));
     running = false;
     savedtime = 0;
-    renew->start(100);
+    renew->start(10);
 }
 
 ThemeClock::~ThemeClock(){
