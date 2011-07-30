@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 TARGET = iyptclockclient
 TEMPLATE = app
@@ -12,10 +12,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../themeclockwidget.cpp
+    ../themeclockwidget.cpp \
+    broadcastclient.cpp
 
 HEADERS  += mainwindow.h \
-    ../themeclockwidget.h
+    ../themeclockwidget.h \
+    broadcastclient.h
 
 FORMS    += mainwindow.ui
 
