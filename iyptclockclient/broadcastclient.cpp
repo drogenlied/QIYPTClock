@@ -6,7 +6,7 @@ BroadcastClient::BroadcastClient(QObject *parent, unsigned int p) :
     QObject(parent)
 {
     if(p > 0){
-        port = p;
+        port = p%65536;
     }else{
         port = 54545;
     }
@@ -27,7 +27,7 @@ BroadcastClient::~BroadcastClient(){
 
 void BroadcastClient::setListeningPort(unsigned int p){
     if(p > 0){
-        port = p;
+        port = p%65536;
     }else{
         port = 54545;
     }
