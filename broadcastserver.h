@@ -20,6 +20,7 @@ public slots:
     void setAllowedTime(int);
     void updateTime(int);
     void setBroadcastPort(unsigned int);
+    void setSignature(unsigned int);
 
 private slots:
     void broadcast();
@@ -28,7 +29,7 @@ private:
     QUdpSocket *udpSocket;
     QString stagename;
     int allowedtime, time;
-    unsigned int port;
+    unsigned int port, signature;
 };
 
 #endif // BROADCASTSERVER_H

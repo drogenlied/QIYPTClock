@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
+    connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
+
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
     timer->start(30);
@@ -25,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(thc, SIGNAL(stopped(int)), ui->graphicsView, SLOT(setTime(int)));
 
     connect(ui->startstop, SIGNAL(clicked()), thc, SLOT(startorpause()));
+    connect(ui->resetButton, SIGNAL(clicked()), thc, SLOT(reset()));
     connect(thc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
 
     ListController *lc = new ListController();
@@ -37,8 +41,11 @@ MainWindow::MainWindow(QWidget *parent) :
     BroadcastServer *bs = new BroadcastServer();
 
     connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
+    connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(allowedTimeChanged(int)), bs, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(stageNameChanged(QString)), bs, SLOT(setStageName(QString)));
+    connect(this, SIGNAL(newPort(uint)), bs, SLOT(setBroadcastPort(uint)));
+    connect(this, SIGNAL(newID(uint)), bs, SLOT(setSignature(uint)));
 
     thc->setAllowedTime(20000);
 
@@ -59,4 +66,12 @@ void MainWindow::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void MainWindow::triggerId(){
+    emit (unsigned int)(ui->idBox->value());
+}
+
+void MainWindow::triggerPort(){
+    emit (unsigned int)(ui->portBox->value());
 }

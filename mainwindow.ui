@@ -178,7 +178,17 @@
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QSpinBox" name="portBox"/>
+           <widget class="QSpinBox" name="portBox">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+            <property name="value">
+             <number>54545</number>
+            </property>
+           </widget>
           </item>
           <item row="1" column="3">
            <widget class="QPushButton" name="portButton">
@@ -187,13 +197,23 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QLineEdit" name="idLineEdit"/>
-          </item>
           <item row="2" column="3">
            <widget class="QPushButton" name="idButton">
             <property name="text">
              <string>Set ID</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QSpinBox" name="idBox">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>400000000</number>
+            </property>
+            <property name="value">
+             <number>123456</number>
             </property>
            </widget>
           </item>

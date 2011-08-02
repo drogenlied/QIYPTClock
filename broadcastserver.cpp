@@ -6,10 +6,10 @@ BroadcastServer::BroadcastServer(QObject *parent, unsigned int p) :
     QObject(parent)
 {
     udpSocket = new QUdpSocket(this);
-    if (p < INT_MAX) {
-        port = p;
+    if(p > 0){
+        port = p%65536;
     }else{
-        port = p/2;
+        port = 54545;
     }
     connect(this, SIGNAL(updated()), this, SLOT(broadcast()));
 }
@@ -36,8 +36,12 @@ void BroadcastServer::updateTime(int t){
 
 void BroadcastServer::setBroadcastPort(unsigned int p){
     if (p>0)
-        port = p;
+        port = p%65536;
     emit updated();
+}
+
+void BroadcastServer::setSignature(unsigned int sig){
+    signature = sig;
 }
 
 void BroadcastServer::broadcast(){
