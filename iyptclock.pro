@@ -10,10 +10,12 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     themeclock.cpp \
     listcontroller.cpp \
-    broadcastserver.cpp
+    broadcastserver.cpp \
+    stagelistmodel.cpp
 HEADERS += mainwindow.h \
     themeclock.h \
     listcontroller.h \
-    broadcastserver.h
+    broadcastserver.h \
+    stagelistmodel.h
 FORMS += mainwindow.ui
 include(themeclockwidget.pri)
