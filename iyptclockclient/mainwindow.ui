@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
-    <height>412</height>
+    <width>428</width>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,8 +75,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>430</width>
-     <height>23</height>
+     <width>428</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuIYPTClockClient">
@@ -102,6 +102,9 @@
    </property>
    <property name="toolTip">
     <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
