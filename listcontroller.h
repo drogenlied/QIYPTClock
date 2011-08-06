@@ -19,6 +19,7 @@
 #define LISTCONTROLLER_H
 
 #include <QObject>
+#include "stagelistmodel.h"
 
 class ListController : public QObject
 {
@@ -26,19 +27,25 @@ class ListController : public QObject
 public:
     explicit ListController(QObject *parent = 0);
     ~ListController();
+
     int loadListFromFile(QString path);
     int saveListToFile(QString path);
+    QAbstractTableModel* getModel();
 
 signals:
     void allowedTimeChanged(int);
     void resetTime();
     void stageNameChanged(QString);
+    void modelChanged(QAbstractTableModel*);
 
 public slots:
     void forward();
     void backward();
-private:
+    //void add();
+    //void del();
 
+private:
+    StageListModel* stlm;
 };
 
 #endif // LISTCONTROLLER_H

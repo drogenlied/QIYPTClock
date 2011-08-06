@@ -66,6 +66,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     thc->setAllowedTime(20000);
 
+    lc->loadListFromFile("stages.txt");
+    ui->tableView->setModel(lc->getModel());
+    ui->stagelist->setModel(lc->getModel());
+
 }
 
 MainWindow::~MainWindow()

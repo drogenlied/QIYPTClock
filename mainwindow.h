@@ -19,6 +19,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QAbstractTableModel>
 
 namespace Ui {
     class MainWindow;
