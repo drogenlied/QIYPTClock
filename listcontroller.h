@@ -37,6 +37,7 @@ signals:
     void resetTime();
     void stageNameChanged(QString);
     void modelChanged(QAbstractTableModel*);
+    void endOfStage();
 
 public slots:
     void forward();
@@ -46,6 +47,7 @@ public slots:
 
 private:
     StageListModel* stlm;
+    unsigned int currentIndex;
 };
 
 #endif // LISTCONTROLLER_H

@@ -24,18 +24,37 @@ ListController::ListController(QObject *parent) :
     QObject(parent)
 {
     stlm = new StageListModel();
+    currentIndex = 0;
 }
 
 ListController::~ListController(){
-
+    delete stlm;
 }
 
 void ListController::forward(){
-
+    QTime tmpt = QTime(0,0,0);
+    if(currentIndex < stlm->rowCount()-1){
+        currentIndex++;
+        Stage st = stlm->getList().value(currentIndex);
+        if (!st.carry) emit resetTime();
+        emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit stageNameChanged(st.name);
+    } else if (currentIndex >= stlm->rowCount()-1){
+        emit endOfStage();
+    }
 }
 
 void ListController::backward(){
-
+    QTime tmpt = QTime(0,0,0);
+    if(currentIndex > 0){
+        currentIndex--;
+        Stage st = stlm->getList().value(currentIndex);
+        if (!st.carry) emit resetTime();
+        emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit stageNameChanged(st.name);
+    } else if (currentIndex <= 0){
+        emit endOfStage();
+    }
 }
 
 int ListController::loadListFromFile(QString path){

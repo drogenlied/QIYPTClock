@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(thc, SIGNAL(paused(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(thc, SIGNAL(restarted(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(thc, SIGNAL(stopped(int)), ui->graphicsView, SLOT(setTime(int)));
+    connect(thc, SIGNAL(stopped(int)), this, SLOT(toggleStartPause()));
+
 
     connect(ui->startstop, SIGNAL(clicked()), thc, SLOT(startorpause()));
     connect(ui->resetButton, SIGNAL(clicked()), thc, SLOT(reset()));
@@ -55,11 +57,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(itemShouldBeDeleted(QModelIndex)), lc, SLOT(del(QModelIndex)));
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
+    connect(lc, SIGNAL(endOfStage()), thc, SLOT(stop()));
 
     bs = new BroadcastServer();
 
     connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));
+    connect(thc, SIGNAL(stopped(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(allowedTimeChanged(int)), bs, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(stageNameChanged(QString)), bs, SLOT(setStageName(QString)));
     connect(this, SIGNAL(newPort(uint)), bs, SLOT(setBroadcastPort(uint)));
