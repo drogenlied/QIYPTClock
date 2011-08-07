@@ -21,9 +21,18 @@
 #define STAGELISTMODEL_H
 
 #include <QAbstractTableModel>
-#include <QPair>
 #include <QList>
 #include <QTime>
+
+class Stage {
+public:
+    Stage();
+    Stage(QTime duration, QString name, bool carry = false);
+
+    QTime duration;
+    QString name;
+    bool carry;
+};
 
 class StageListModel : public QAbstractTableModel
 {
@@ -31,7 +40,7 @@ class StageListModel : public QAbstractTableModel
 
 public:
     StageListModel(QObject *parent=0);
-    StageListModel(QList< QPair<QTime, QString> > listofStages, QObject *parent=0);
+    StageListModel(QList<Stage> listofStages, QObject *parent=0);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -41,10 +50,10 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role=Qt::EditRole);
     bool insertRows(int position, int rows, const QModelIndex &index=QModelIndex());
     bool removeRows(int position, int rows, const QModelIndex &index=QModelIndex());
-    QList< QPair<QTime, QString> > getList();
+    QList<Stage> getList();
 
 private:
-    QList< QPair<QTime, QString> > listOfStages;
+    QList<Stage> listOfStages;
 };
 
 #endif // STAGELISTMODEL_H

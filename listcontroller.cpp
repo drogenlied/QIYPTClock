@@ -39,7 +39,7 @@ void ListController::backward(){
 }
 
 int ListController::loadListFromFile(QString path){
-    QList< QPair<QTime, QString> > tmplist;
+    QList<Stage> tmplist;
     QFile file(path);
     StageListModel* oldstlm;
 
@@ -51,8 +51,17 @@ int ListController::loadListFromFile(QString path){
         QTime tmpt = QTime(0,0,0);
         QString line = in.readLine();
         QStringList sl = line.split(QChar('\t'));
-        if(sl.size() >= 2){
-            tmplist.append( QPair<QTime, QString>(tmpt.addMSecs(sl.value(0).toInt()), sl.value(1)) );
+        if(sl.size() == 2){
+            tmplist.append( Stage(
+                                tmpt.addMSecs(sl.value(0).toInt()),
+                                sl.value(1))
+                            );
+        }else if(sl.size() >= 3){
+            tmplist.append( Stage(
+                                tmpt.addMSecs(sl.value(0).toInt()),
+                                sl.value(1),
+                                (sl.value(3).toUInt() > 0 ? true : false)
+                                ) );
         }
     }
     oldstlm = stlm;
@@ -65,14 +74,14 @@ int ListController::loadListFromFile(QString path){
 
 int ListController::saveListToFile(QString path){
     QTime tmpt = QTime(0,0,0);
-    QList< QPair<QTime, QString> > tmplist = stlm->getList();
+    QList<Stage> tmplist = stlm->getList();
     QFile file(path);
          if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
              return 1;
 
     QTextStream out(&file);
-    for(QList< QPair<QTime, QString> >::iterator t = tmplist.begin(); t != tmplist.end(); t++){
-        out << tmpt.msecsTo(t->first) << "\t" << t->second << "\n";
+    for(QList<Stage>::iterator t = tmplist.begin(); t != tmplist.end(); t++){
+        out << tmpt.msecsTo(t->duration) << "\t" << t->name << "\t" << (unsigned int)(t->carry ? 1 : 0) << "\n";
     }
     file.close();
     return 0;

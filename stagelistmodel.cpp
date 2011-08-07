@@ -19,127 +19,128 @@
 
 #include "stagelistmodel.h"
 
+Stage::Stage(){
+
+}
+
+Stage::Stage(QTime d, QString n, bool c){
+    duration = d;
+    name = n;
+    carry = c;
+}
+
 StageListModel::StageListModel(QObject *parent)
      : QAbstractTableModel(parent)
  {
  }
 
- StageListModel::StageListModel(QList< QPair<QTime, QString> > pairs, QObject *parent)
-     : QAbstractTableModel(parent)
- {
-     listOfStages=pairs;
- }
+StageListModel::StageListModel(QList<Stage> stages, QObject *parent)
+    : QAbstractTableModel(parent) {
+    listOfStages=stages;
+}
 
- int StageListModel::rowCount(const QModelIndex &parent) const
- {
-     Q_UNUSED(parent);
-     return listOfStages.size();
- }
+int StageListModel::rowCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent);
+    return listOfStages.size();
+}
 
- int StageListModel::columnCount(const QModelIndex &parent) const
- {
-     Q_UNUSED(parent);
-     return 2;
- }
+int StageListModel::columnCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent);
+    return 2;
+}
 
- QVariant StageListModel::data(const QModelIndex &index, int role) const
- {
-     if (!index.isValid())
-         return QVariant();
+QVariant StageListModel::data(const QModelIndex &index, int role) const {
+    if (!index.isValid())
+        return QVariant();
 
-     if (index.row() >= listOfStages.size() || index.row() < 0)
-         return QVariant();
+    if (index.row() >= listOfStages.size() || index.row() < 0)
+        return QVariant();
 
-     if (role == Qt::DisplayRole) {
-         QPair<QTime, QString> pair = listOfStages.at(index.row());
+    if (role == Qt::DisplayRole) {
+        Stage stage = listOfStages.at(index.row());
 
-         if (index.column() == 0)
-             return pair.first;
-         else if (index.column() == 1)
-             return pair.second;
-     }
-     return QVariant();
- }
+        if (index.column() == 0)
+            return stage.duration;
+        else if (index.column() == 1)
+            return stage.name;
+        else if (index.column() == 2)
+            return stage.carry;
+    }
+    return QVariant();
+}
 
- QVariant StageListModel::headerData(int section, Qt::Orientation orientation, int role) const
- {
-     if (role != Qt::DisplayRole)
-         return QVariant();
+QVariant StageListModel::headerData(int section, Qt::Orientation orientation, int role) const {
+    if (role != Qt::DisplayRole)
+        return QVariant();
 
-     if (orientation == Qt::Horizontal) {
-         switch (section) {
-             case 0:
-                 return tr("Duration");
-
+    if (orientation == Qt::Horizontal) {
+        switch (section) {
+            case 0:
+                return tr("Duration");
              case 1:
-                 return tr("Stage Name");
-
+                return tr("Stage Description");
+             case 2:
+                return tr("Carry Time");
              default:
-                 return QVariant();
-         }
-     }
-     return QVariant();
- }
+                return QVariant();
+        }
+    }
+    return QVariant();
+}
 
- bool StageListModel::insertRows(int position, int rows, const QModelIndex &index)
- {
-     Q_UNUSED(index);
-     beginInsertRows(QModelIndex(), position, position+rows-1);
+bool StageListModel::insertRows(int position, int rows, const QModelIndex &index) {
+    Q_UNUSED(index);
+    beginInsertRows(QModelIndex(), position, position+rows-1);
 
-     for (int row=0; row < rows; row++) {
-         QPair<QTime, QString> pair(QTime(0,0,1), " ");
-         listOfStages.insert(position, pair);
-     }
+    for (int row=0; row < rows; row++) {
+        Stage stage(QTime(0,0,1), " ");
+        listOfStages.insert(position, stage);
+    }
 
-     endInsertRows();
-     return true;
- }
+    endInsertRows();
+    return true;
+}
 
- bool StageListModel::removeRows(int position, int rows, const QModelIndex &index)
- {
-     Q_UNUSED(index);
-     beginRemoveRows(QModelIndex(), position, position+rows-1);
+bool StageListModel::removeRows(int position, int rows, const QModelIndex &index) {
+    Q_UNUSED(index);
+    beginRemoveRows(QModelIndex(), position, position+rows-1);
 
-     for (int row=0; row < rows; ++row) {
-         listOfStages.removeAt(position);
-     }
+    for (int row=0; row < rows; ++row) {
+        listOfStages.removeAt(position);
+    }
 
-     endRemoveRows();
-     return true;
- }
+    endRemoveRows();
+    return true;
+}
 
- bool StageListModel::setData(const QModelIndex &index, const QVariant &value, int role)
- {
-         if (index.isValid() && role == Qt::EditRole) {
-                 int row = index.row();
+bool StageListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+    if (index.isValid() && role == Qt::EditRole) {
+        int row = index.row();
+        QTime tmpt = QTime(0,0,0);
+        Stage p = listOfStages.value(row);
+        if (index.column() == 0)
+            p.duration = tmpt.addSecs(value.toInt());
+        else if (index.column() == 1)
+            p.name = value.toString();
+        else if (index.column() == 2)
+            p.carry = value.toBool();
+        else
+            return false;
 
-                 QPair<QTime, QString> p = listOfStages.value(row);
+        listOfStages.replace(row, p);
+        emit(dataChanged(index, index));
 
-                 if (index.column() == 0)
-                         p.first = value.toTime();
-                 else if (index.column() == 1)
-                         p.second = value.toString();
-         else
-             return false;
+        return true;
+    }
+    return false;
+}
 
-         listOfStages.replace(row, p);
-                 emit(dataChanged(index, index));
+Qt::ItemFlags StageListModel::flags(const QModelIndex &index) const {
+    if (!index.isValid())
+        return Qt::ItemIsEnabled;
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+}
 
-         return true;
-         }
-
-         return false;
- }
-
- Qt::ItemFlags StageListModel::flags(const QModelIndex &index) const
- {
-     if (!index.isValid())
-         return Qt::ItemIsEnabled;
-
-     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
- }
-
- QList< QPair<QTime, QString> > StageListModel::getList()
- {
-     return listOfStages;
- }
+QList<Stage> StageListModel::getList(){
+    return listOfStages;
+}
