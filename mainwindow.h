@@ -42,6 +42,7 @@ public slots:
     void triggerDel();
     void toggleStartPause();
     void saveStages();
+    void propagateModel(QAbstractTableModel*);
 
 signals:
     void newID(unsigned int);
@@ -53,7 +54,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    QTimer *timer;
+    QTimer *timer, *timer2;
     ThemeClock *thc;
     ListController *lc;
     BroadcastServer *bs;

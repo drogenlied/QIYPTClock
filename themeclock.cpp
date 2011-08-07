@@ -79,3 +79,7 @@ QString ThemeClock::toString(){
     s.chop(2);
     return s;
 }
+
+bool ThemeClock::isRunning(){
+    return running;
+}

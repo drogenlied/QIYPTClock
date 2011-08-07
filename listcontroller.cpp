@@ -41,6 +41,7 @@ void ListController::forward(){
         emit stageNameChanged(st.name);
     } else if (currentIndex >= stlm->rowCount()-1){
         emit endOfStage();
+        currentIndex = stlm->rowCount()-1;
     }
 }
 
@@ -54,6 +55,7 @@ void ListController::backward(){
         emit stageNameChanged(st.name);
     } else if (currentIndex <= 0){
         emit endOfStage();
+        currentIndex = 0;
     }
 }
 
@@ -88,6 +90,13 @@ int ListController::loadListFromFile(QString path){
     emit modelChanged(stlm);
     delete oldstlm;
     file.close();
+
+    QTime tmpt = QTime(0,0,0);
+    if(currentIndex < stlm->rowCount()-1){
+        Stage st = stlm->getList().value(currentIndex);
+        emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit stageNameChanged(st.name);
+    }
     return 0;
 }
 

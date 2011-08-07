@@ -42,9 +42,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(thc, SIGNAL(paused(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(thc, SIGNAL(restarted(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(thc, SIGNAL(stopped(int)), ui->graphicsView, SLOT(setTime(int)));
-    connect(thc, SIGNAL(stopped(int)), this, SLOT(toggleStartPause()));
-
-
     connect(ui->startstop, SIGNAL(clicked()), thc, SLOT(startorpause()));
     connect(ui->resetButton, SIGNAL(clicked()), thc, SLOT(reset()));
     connect(thc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
@@ -59,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
     connect(lc, SIGNAL(endOfStage()), thc, SLOT(stop()));
     connect(lc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));
+    connect(lc, SIGNAL(modelChanged(QAbstractTableModel*)), this, SLOT(propagateModel(QAbstractTableModel*)));
 
     bs = new BroadcastServer();
 
@@ -70,17 +68,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(newPort(uint)), bs, SLOT(setBroadcastPort(uint)));
     connect(this, SIGNAL(newID(uint)), bs, SLOT(setSignature(uint)));
 
-    thc->setAllowedTime(20000);
-
     lc->loadListFromFile("stages.txt");
-    ui->tableView->setModel(lc->getModel());
-    ui->stagelist->setModel(lc->getModel());
+    thc->stop();
 
+    timer2 = new QTimer();
+    connect(timer2, SIGNAL(timeout()), this, SLOT(toggleStartPause()));
+    timer2->start(100);
 }
 
 MainWindow::~MainWindow()
 {
+    delete timer;
     delete ui;
+    delete bs;
+    delete lc;
+    delete thc;
 }
 
 void MainWindow::changeEvent(QEvent *e)
@@ -108,7 +110,7 @@ void MainWindow::triggerDel(){
 }
 
 void MainWindow::toggleStartPause(){
-    if(ui->startstop->text() == "Start"){
+    if(thc->isRunning()){
         ui->startstop->setText("Pause");
     }else{
         ui->startstop->setText("Start");
@@ -117,4 +119,9 @@ void MainWindow::toggleStartPause(){
 
 void MainWindow::saveStages(){
     lc->saveListToFile("stages.txt");
+}
+
+void MainWindow::propagateModel(QAbstractTableModel* mdl){
+    ui->stagelist->setModel(mdl);
+    ui->tableView->setModel(mdl);
 }
