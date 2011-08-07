@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bc, SIGNAL(timeUpdate(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(bc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
     connect(bc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
-    connect(bc, SIGNAL(stageNameChanged(QString)), ui->statusBar, SLOT(setWindowTitle(QString)));
+    connect(bc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));
     connect(this, SIGNAL(newPort(uint)), bc, SLOT(setListeningPort(uint)));
     connect(this, SIGNAL(newID(uint)), bc, SLOT(setSignature(uint)));
 }
