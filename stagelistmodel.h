@@ -23,6 +23,7 @@
 #include <QAbstractTableModel>
 #include <QPair>
 #include <QList>
+#include <QTime>
 
 class StageListModel : public QAbstractTableModel
 {
@@ -30,7 +31,7 @@ class StageListModel : public QAbstractTableModel
 
 public:
     StageListModel(QObject *parent=0);
-    StageListModel(QList< QPair<int, QString> > listofStages, QObject *parent=0);
+    StageListModel(QList< QPair<QTime, QString> > listofStages, QObject *parent=0);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -40,10 +41,10 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role=Qt::EditRole);
     bool insertRows(int position, int rows, const QModelIndex &index=QModelIndex());
     bool removeRows(int position, int rows, const QModelIndex &index=QModelIndex());
-    QList< QPair<int, QString> > getList();
+    QList< QPair<QTime, QString> > getList();
 
 private:
-    QList< QPair<int, QString> > listOfStages;
+    QList< QPair<QTime, QString> > listOfStages;
 };
 
 #endif // STAGELISTMODEL_H

@@ -24,7 +24,7 @@ StageListModel::StageListModel(QObject *parent)
  {
  }
 
- StageListModel::StageListModel(QList< QPair<int, QString> > pairs, QObject *parent)
+ StageListModel::StageListModel(QList< QPair<QTime, QString> > pairs, QObject *parent)
      : QAbstractTableModel(parent)
  {
      listOfStages=pairs;
@@ -51,7 +51,7 @@ StageListModel::StageListModel(QObject *parent)
          return QVariant();
 
      if (role == Qt::DisplayRole) {
-         QPair<int, QString> pair = listOfStages.at(index.row());
+         QPair<QTime, QString> pair = listOfStages.at(index.row());
 
          if (index.column() == 0)
              return pair.first;
@@ -87,7 +87,7 @@ StageListModel::StageListModel(QObject *parent)
      beginInsertRows(QModelIndex(), position, position+rows-1);
 
      for (int row=0; row < rows; row++) {
-         QPair<int, QString> pair(1, " ");
+         QPair<QTime, QString> pair(QTime(0,0,1), " ");
          listOfStages.insert(position, pair);
      }
 
@@ -113,10 +113,10 @@ StageListModel::StageListModel(QObject *parent)
          if (index.isValid() && role == Qt::EditRole) {
                  int row = index.row();
 
-                 QPair<int, QString> p = listOfStages.value(row);
+                 QPair<QTime, QString> p = listOfStages.value(row);
 
                  if (index.column() == 0)
-                         p.first = value.toInt();
+                         p.first = value.toTime();
                  else if (index.column() == 1)
                          p.second = value.toString();
          else
@@ -139,7 +139,7 @@ StageListModel::StageListModel(QObject *parent)
      return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
  }
 
- QList< QPair<int, QString> > StageListModel::getList()
+ QList< QPair<QTime, QString> > StageListModel::getList()
  {
      return listOfStages;
  }
