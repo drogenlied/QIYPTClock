@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
+    connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
 
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
@@ -36,9 +38,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
     connect(bc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
     connect(bc, SIGNAL(stageNameChanged(QString)), ui->statusBar, SLOT(setWindowTitle(QString)));
+    connect(this, SIGNAL(newPort(uint)), bc, SLOT(setListeningPort(uint)));
+    connect(this, SIGNAL(newID(uint)), bc, SLOT(setSignature(uint)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::triggerId(){
+    emit newID((unsigned int)(ui->idBox->value()));
+}
+
+void MainWindow::triggerPort(){
+    emit newPort((unsigned int)(ui->portBox->value()));
 }

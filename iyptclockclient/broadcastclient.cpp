@@ -51,6 +51,10 @@ void BroadcastClient::setListeningPort(unsigned int p){
     udpSocket->bind(port, QUdpSocket::ShareAddress);
 }
 
+void BroadcastClient::setSignature(unsigned int sig){
+    signature = sig;
+}
+
 void BroadcastClient::processDatagrams(){
     quint32 nsignature, nallowedtime, ntime;
     QString nstagename;

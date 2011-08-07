@@ -37,6 +37,7 @@ signals:
 
 public slots:
     void setListeningPort(unsigned int);
+    void setSignature(unsigned int);
 
 private slots:
     void processDatagrams();

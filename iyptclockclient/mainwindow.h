@@ -32,6 +32,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void triggerId();
+    void triggerPort();
+
+signals:
+    void newID(unsigned int);
+    void newPort(unsigned int);
+
 private:
     Ui::MainWindow *ui;
 };
