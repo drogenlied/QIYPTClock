@@ -20,6 +20,10 @@
 
 #include <QMainWindow>
 #include <QAbstractTableModel>
+#include "themeclock.h"
+#include "listcontroller.h"
+#include "broadcastserver.h"
+#include <QtCore/QTimer>
 
 namespace Ui {
     class MainWindow;
@@ -37,6 +41,7 @@ public slots:
     void triggerPort();
     void triggerDel();
     void toggleStartPause();
+    void saveStages();
 
 signals:
     void newID(unsigned int);
@@ -48,6 +53,11 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    QTimer *timer;
+    ThemeClock *thc;
+    ListController *lc;
+    BroadcastServer *bs;
+
 };
 
 #endif // MAINWINDOW_H

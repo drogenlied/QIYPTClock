@@ -17,10 +17,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "themeclock.h"
-#include "listcontroller.h"
-#include "broadcastserver.h"
-#include <QtCore/QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,12 +28,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
     connect(ui->startstop, SIGNAL(clicked()), this, SLOT(toggleStartPause()));
     connect(ui->delButton, SIGNAL(clicked()), this, SLOT(triggerDel()));
+    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveStages()));
 
-    QTimer *timer = new QTimer();
+    timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
     timer->start(30);
 
-    ThemeClock *thc = new ThemeClock();
+    thc = new ThemeClock();
 
     connect(thc, SIGNAL(timeUpdate(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(thc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
@@ -50,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->resetButton, SIGNAL(clicked()), thc, SLOT(reset()));
     connect(thc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
 
-    ListController *lc = new ListController();
+    lc = new ListController();
 
     connect(ui->ffwd, SIGNAL(clicked()), lc, SLOT(forward()));
     connect(ui->bwd, SIGNAL(clicked()), lc, SLOT(backward()));
@@ -59,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
 
-    BroadcastServer *bs = new BroadcastServer();
+    bs = new BroadcastServer();
 
     connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));
@@ -111,4 +108,8 @@ void MainWindow::toggleStartPause(){
     }else{
         ui->startstop->setText("Start");
     }
+}
+
+void MainWindow::saveStages(){
+    lc->saveListToFile("stages.txt");
 }
