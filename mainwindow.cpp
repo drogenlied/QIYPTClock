@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
     connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
+    connect(ui->startstop, SIGNAL(clicked()), this, SLOT(toggleStartPause()));
+    connect(ui->delButton, SIGNAL(clicked()), this, SLOT(triggerDel()));
 
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
@@ -52,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->ffwd, SIGNAL(clicked()), lc, SLOT(forward()));
     connect(ui->bwd, SIGNAL(clicked()), lc, SLOT(backward()));
+    connect(ui->addButton, SIGNAL(clicked()), lc, SLOT(add()));
+    connect(this, SIGNAL(itemShouldBeDeleted(QModelIndex)), lc, SLOT(del(QModelIndex)));
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
 
@@ -95,4 +99,16 @@ void MainWindow::triggerId(){
 
 void MainWindow::triggerPort(){
     emit (unsigned int)(ui->portBox->value());
+}
+
+void MainWindow::triggerDel(){
+    emit itemShouldBeDeleted(ui->tableView->currentIndex());
+}
+
+void MainWindow::toggleStartPause(){
+    if(ui->startstop->text() == "Start"){
+        ui->startstop->setText("Pause");
+    }else{
+        ui->startstop->setText("Start");
+    }
 }

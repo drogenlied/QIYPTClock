@@ -35,10 +35,13 @@ public:
 public slots:
     void triggerId();
     void triggerPort();
+    void triggerDel();
+    void toggleStartPause();
 
 signals:
     void newID(unsigned int);
     void newPort(unsigned int);
+    void itemShouldBeDeleted(QModelIndex);
 
 protected:
     void changeEvent(QEvent *e);

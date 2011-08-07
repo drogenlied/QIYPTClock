@@ -41,8 +41,8 @@ signals:
 public slots:
     void forward();
     void backward();
-    //void add();
-    //void del();
+    void add();
+    void del(QModelIndex ind);
 
 private:
     StageListModel* stlm;

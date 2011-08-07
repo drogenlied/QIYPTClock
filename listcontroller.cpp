@@ -77,3 +77,11 @@ int ListController::saveListToFile(QString path){
 QAbstractTableModel* ListController::getModel(){
     return stlm;
 }
+
+void ListController::add(){
+    stlm->insertRows(stlm->rowCount(),1);
+}
+
+void ListController::del(QModelIndex ind){
+    stlm->removeRows(ind.row(),1);
+}
