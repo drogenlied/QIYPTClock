@@ -94,11 +94,11 @@ void MainWindow::changeEvent(QEvent *e)
 }
 
 void MainWindow::triggerId(){
-    emit (unsigned int)(ui->idBox->value());
+    emit newID((unsigned int)(ui->idBox->value()));
 }
 
 void MainWindow::triggerPort(){
-    emit (unsigned int)(ui->portBox->value());
+    emit newPort((unsigned int)(ui->portBox->value()));
 }
 
 void MainWindow::triggerDel(){
