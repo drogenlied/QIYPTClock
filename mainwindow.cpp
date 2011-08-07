@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
     connect(lc, SIGNAL(endOfStage()), thc, SLOT(stop()));
+    connect(lc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));
 
     bs = new BroadcastServer();
 
