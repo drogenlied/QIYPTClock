@@ -19,6 +19,7 @@
 #include <QFile>
 #include <QStringList>
 #include <QTextStream>
+#include <QBrush>
 
 ListController::ListController(QObject *parent) :
     QObject(parent)
@@ -35,8 +36,9 @@ void ListController::forward(){
     QTime tmpt = QTime(0,0,0);
     if(currentIndex < stlm->rowCount()-1){
         currentIndex++;
+        stlm->setHighlightedRow(currentIndex);
         Stage st = stlm->getList().value(currentIndex);
-        if (!st.carry) emit resetTime();
+        if (!stlm->getList().value(currentIndex-1).carry) emit resetTime();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
     } else if (currentIndex >= stlm->rowCount()-1){
@@ -49,6 +51,7 @@ void ListController::backward(){
     QTime tmpt = QTime(0,0,0);
     if(currentIndex > 0){
         currentIndex--;
+        stlm->setHighlightedRow(currentIndex);
         Stage st = stlm->getList().value(currentIndex);
         if (!st.carry) emit resetTime();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
@@ -81,7 +84,7 @@ int ListController::loadListFromFile(QString path){
             tmplist.append( Stage(
                                 tmpt.addMSecs(sl.value(0).toInt()),
                                 sl.value(1),
-                                (sl.value(3).toUInt() > 0 ? true : false)
+                                (sl.value(2).toUInt() > 0 ? true : false)
                                 ) );
         }
     }

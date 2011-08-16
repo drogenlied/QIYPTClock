@@ -23,6 +23,7 @@
 #include <QAbstractTableModel>
 #include <QList>
 #include <QTime>
+#include <QColor>
 
 class Stage {
 public:
@@ -51,9 +52,15 @@ public:
     bool insertRows(int position, int rows, const QModelIndex &index=QModelIndex());
     bool removeRows(int position, int rows, const QModelIndex &index=QModelIndex());
     QList<Stage> getList();
+    int getHighlightedRow();
+    void setHighlightedRow(int row);
+    QColor getHighlightColor();
+    void setHighlightColor(QColor highlightColor);
 
 private:
     QList<Stage> listOfStages;
+    QColor highlightColor;
+    int highlightedRow;
 };
 
 #endif // STAGELISTMODEL_H

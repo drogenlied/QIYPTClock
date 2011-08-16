@@ -32,11 +32,15 @@ Stage::Stage(QTime d, QString n, bool c){
 StageListModel::StageListModel(QObject *parent)
      : QAbstractTableModel(parent)
  {
+    highlightedRow = 0;
+    highlightColor = QColor::fromRgb(0xff, 0x99, 0x11);
  }
 
 StageListModel::StageListModel(QList<Stage> stages, QObject *parent)
     : QAbstractTableModel(parent) {
     listOfStages=stages;
+    highlightColor = QColor::fromRgb(0xff, 0x99, 0x11);
+    highlightedRow = 0;
 }
 
 int StageListModel::rowCount(const QModelIndex &parent) const {
@@ -65,6 +69,10 @@ QVariant StageListModel::data(const QModelIndex &index, int role) const {
             return stage.name;
         else if (index.column() == 2)
             return stage.carry;
+    }
+    if (role == Qt::BackgroundRole) {
+        if(index.row() == highlightedRow)
+            return highlightColor;
     }
     return QVariant();
 }
@@ -143,4 +151,26 @@ Qt::ItemFlags StageListModel::flags(const QModelIndex &index) const {
 
 QList<Stage> StageListModel::getList(){
     return listOfStages;
+}
+
+int StageListModel::getHighlightedRow(){
+    return highlightedRow;
+}
+
+void StageListModel::setHighlightedRow(int row){
+    if (row < listOfStages.size() && row >= 0){
+        int tlRow = (row < highlightedRow) ? row : highlightedRow;
+        int brRow = (row < highlightedRow) ? highlightedRow : row;
+        highlightedRow = row;
+        emit dataChanged(this->index(tlRow,0),this->index(brRow,this->columnCount()-1));
+    }
+}
+
+QColor StageListModel::getHighlightColor(){
+    return highlightColor;
+}
+
+void StageListModel::setHighlightColor(QColor color){
+    highlightColor = color;
+    emit dataChanged(this->index(highlightedRow,0),this->index(highlightedRow,this->columnCount()-1));
 }
