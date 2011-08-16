@@ -25,7 +25,7 @@ class BroadcastClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit BroadcastClient(QObject *parent = 0, unsigned int port = 54545);
+    explicit BroadcastClient(QObject *parent = 0, unsigned int port = 54545, unsigned int signature = 123456);
     ~BroadcastClient();
     QString toString();
 

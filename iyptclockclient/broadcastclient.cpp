@@ -19,7 +19,7 @@
 #include <QDataStream>
 #include <QtNetwork>
 
-BroadcastClient::BroadcastClient(QObject *parent, unsigned int p) :
+BroadcastClient::BroadcastClient(QObject *parent, unsigned int p, unsigned int sig) :
     QObject(parent)
 {
     if(p > 0){
@@ -27,6 +27,7 @@ BroadcastClient::BroadcastClient(QObject *parent, unsigned int p) :
     }else{
         port = 54545;
     }
+    signature = sig;
 
     time = 0;
     allowedtime = 1;
@@ -69,6 +70,9 @@ void BroadcastClient::processDatagrams(){
         dgstream >> ntime;
         dgstream >> nstagename;
     }
+    if (signature != nsignature)
+        return;
+
     if (time != ntime){
         time = ntime;
         emit timeUpdate(time);

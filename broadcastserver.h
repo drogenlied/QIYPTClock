@@ -25,7 +25,7 @@ class BroadcastServer : public QObject
 {
     Q_OBJECT
 public:
-    explicit BroadcastServer(QObject *parent = 0, unsigned int p = 54545);
+    explicit BroadcastServer(QObject *parent = 0, unsigned int port = 54545, unsigned int signature = 123456);
     ~BroadcastServer();
 
 signals:
