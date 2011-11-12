@@ -1,0 +1,14 @@
+60000	The Opponent challenges the Reporter for the problem 	0
+60000	The Reporter accepts or rejects the challenge 	0
+300000	Preparation of the Reporter	0
+720000	Presentation of the report 	0
+120000	Questions of the Opponent to the Reporter	0
+180000	Preparation of the Opponent 	0
+240000	The Opponent takes the floor	1
+840000	Discussion between the Reporter and the Opponent 	0
+60000	The Opponent summarizes the discussion	0
+180000	Questions of the Reviewer to the Reporter	0
+120000	Preparation of the Reviewer	0
+240000	The Reviewer takes the floor	0
+120000	Concluding remarks of the Reporter	0
+300000	Questions of the Jury	0
