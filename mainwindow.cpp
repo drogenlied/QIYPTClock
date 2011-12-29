@@ -126,7 +126,7 @@ void MainWindow::saveStages(){
 }
 
 void MainWindow::setTime(){
-    switch (ui->setTimeComboBox->itemData(ui->setTimeComboBox->currentIndex().toInt()) {
+    switch (ui->setTimeComboBox->itemData(ui->setTimeComboBox->currentIndex()).toInt()) {
     case TIME_ELAPSED:
             thc->setElapsedTime(ui->setTimeSpinBox->value()*1000);
             break;
