@@ -42,6 +42,7 @@ public slots:
     void triggerDel();
     void toggleStartPause();
     void saveStages();
+    void setTime();
     void propagateModel(QAbstractTableModel*);
 
 signals:
@@ -58,7 +59,10 @@ private:
     ThemeClock *thc;
     ListController *lc;
     BroadcastServer *bs;
-
+    enum {
+        TIME_ELAPSED,
+        TIME_LEFT
+    };
 };
 
 #endif // MAINWINDOW_H

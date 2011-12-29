@@ -46,6 +46,30 @@ void ThemeClock::startorpause(){
     emit allowedTimeChanged(maxtime);
 }
 
+void ThemeClock::setElapsedTime(int ms){
+    if (ms > 0)
+    {
+        t->start();
+        *t = t->addMSecs(-ms);
+        savedtime=ms;
+        emit timeUpdate(t->elapsed());
+        emit timeUpdate(this->toString());
+    }
+}
+
+void ThemeClock::setRemainingTime(int ms){
+    if (ms > 0 && ms <= maxtime)
+    {
+        t->start();
+        *t = t->addMSecs(ms-maxtime);
+        //FIXME: what happens at discussion?
+        savedtime=maxtime-ms;
+        emit timeUpdate(t->elapsed());
+        emit timeUpdate(this->toString());
+    }
+}
+
+
 void ThemeClock::stop(){
     savedtime = 0;
     running = false;

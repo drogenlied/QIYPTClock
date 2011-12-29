@@ -45,6 +45,8 @@ public slots:
     void stop();
     void reset();
     void setAllowedTime(int ms);
+    void setElapsedTime(int ms);
+    void setRemainingTime(int ms);
     void pulse();
 
 private:

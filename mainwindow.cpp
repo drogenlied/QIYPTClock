@@ -44,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(thc, SIGNAL(stopped(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(ui->startstop, SIGNAL(clicked()), thc, SLOT(startorpause()));
     connect(ui->resetButton, SIGNAL(clicked()), thc, SLOT(reset()));
+    connect(ui->setTimeButton, SIGNAL(clicked()), this, SLOT(setTime()));
+    ui->setTimeComboBox->addItem(tr("elapsed time"), QVariant(TIME_ELAPSED));
+    ui->setTimeComboBox->addItem(tr("remaining time"), QVariant(TIME_LEFT));
+
     connect(thc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
 
     lc = new ListController();
@@ -119,6 +123,19 @@ void MainWindow::toggleStartPause(){
 
 void MainWindow::saveStages(){
     lc->saveListToFile("stages.txt");
+}
+
+void MainWindow::setTime(){
+    switch (ui->setTimeComboBox->itemData(ui->setTimeComboBox->currentIndex().toInt()) {
+    case TIME_ELAPSED:
+            thc->setElapsedTime(ui->setTimeSpinBox->value()*1000);
+            break;
+    case TIME_LEFT:
+            thc->setRemainingTime(ui->setTimeSpinBox->value()*1000);
+            break;
+    default:
+            break;
+    }
 }
 
 void MainWindow::propagateModel(QAbstractTableModel* mdl){
