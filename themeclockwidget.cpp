@@ -118,7 +118,7 @@ void ThemeClockWidget::resizeEvent(QResizeEvent *event){
 }
 
 void ThemeClockWidget::act(){
-    bg->setSpanAngle(-((time*360*16)/maxtime));
+    bg->setSpanAngle(-round(((double)time*360*16)/(double)maxtime));
 
     if(time < maxtime/6*5) // over 5/6 of time left
     {
@@ -131,14 +131,14 @@ void ThemeClockWidget::act(){
 
 
     if(time > maxtime && time < 2*maxtime){
-        mg->setSpanAngle(-(((time-maxtime)*360*16)/maxtime));
+        mg->setSpanAngle(-round((((double)time-maxtime)*360*16)/(double)maxtime));
     } else if (time > 2*maxtime){
         mg->setSpanAngle(360*16);
     }else{
         mg->setSpanAngle(0);
     }
     if(time>2*maxtime){
-        fg->setSpanAngle(-(((time-2*maxtime)*360*16)/maxtime));
+        fg->setSpanAngle(-round((((double)time-2*(double)maxtime)*360*16)/(double)maxtime));
     }else{
         fg->setSpanAngle(0);
     }
