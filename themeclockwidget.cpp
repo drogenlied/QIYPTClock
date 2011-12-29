@@ -30,14 +30,14 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     fg->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     fg->setStartAngle(90*16);
     fg->setSpanAngle(-50*16);
-    fg->setBrush(QBrush(QColor(255,0,0)));
+    fg->setBrush(QBrush(QColor(100,30,100)));
     fg->setPen(QPen(QColor(0,0,0,0)));
 
     mg = new QGraphicsEllipseItem(0,0,300,300);
     mg->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     mg->setStartAngle(90*16);
     mg->setSpanAngle(-5*16);
-    mg->setBrush(QBrush(QColor(255,99,0)));
+    mg->setBrush(QBrush(QColor(200,0,0)));
     mg->setPen(QPen(QColor(0,0,0,0)));
 
 
@@ -45,7 +45,7 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     bg->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
     bg->setStartAngle(90*16);
     bg->setSpanAngle(-130*16);
-    bg->setBrush(QBrush(QColor(0,255,0)));
+    bg->setBrush(QBrush(QColor(50,200,30)));
     bg->setPen(QPen(QColor(0,0,0,0)));
 
     focus = new QGraphicsEllipseItem(0,0,300,300);
@@ -119,6 +119,16 @@ void ThemeClockWidget::resizeEvent(QResizeEvent *event){
 
 void ThemeClockWidget::act(){
     bg->setSpanAngle(-((time*360*16)/maxtime));
+
+    if(time < maxtime/6*5) // over 5/6 of time left
+    {
+        bg->setBrush(QBrush(QColor(50,200,30)));
+    }
+    else
+    {
+        bg->setBrush(QBrush(QColor(255,190,30)));
+    }
+
 
     if(time > maxtime && time < 2*maxtime){
         mg->setSpanAngle(-(((time-maxtime)*360*16)/maxtime));
