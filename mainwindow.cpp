@@ -17,6 +17,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -72,7 +73,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(newPort(uint)), bs, SLOT(setBroadcastPort(uint)));
     connect(this, SIGNAL(newID(uint)), bs, SLOT(setSignature(uint)));
 
-    lc->loadListFromFile("stages.txt");
+    if (QFile("stages.txt").exists()){
+        lc->loadListFromFile("stages.txt");
+    } else if (QFile("/usr/share/iyptclock/stages.txt").exists()){
+        lc->loadListFromFile("/usr/share/iyptclock/stages.txt");
+    } else {
+        lc->loadListFromFile("");
+    }
     thc->stop();
 
     timer2 = new QTimer();
@@ -83,10 +90,10 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete timer;
-    delete ui;
     delete bs;
     delete lc;
     delete thc;
+    delete ui;
 }
 
 void MainWindow::changeEvent(QEvent *e)
