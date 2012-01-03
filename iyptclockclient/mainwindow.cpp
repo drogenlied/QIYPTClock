@@ -19,20 +19,40 @@
 #include "ui_mainwindow.h"
 #include "broadcastclient.h"
 #include <QtCore/QTimer>
+#include <tclap/CmdLine.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
+{   
+    unsigned int sig, port;
+    try {
+        TCLAP::CmdLine cmd("iyptclockclient", ' ', "0.9");
+        TCLAP::ValueArg<unsigned int> portArg("p","port","Port to listen on",false, 54545,"unsigned integer");
+        TCLAP::ValueArg<unsigned int> sigArg("s","signature","Signature to use",false, 123456 ,"unsigned integer");
+
+        cmd.add( portArg );
+        cmd.add( sigArg );
+        cmd.parse( QApplication::argc(), QApplication::argv() );
+
+        port = portArg.getValue();
+        sig = sigArg.getValue();
+
+    } catch (TCLAP::ArgException &e) {
+        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
+    }
+
     ui->setupUi(this);
-    connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
-    connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
+//    connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
+//    connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
 
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
     timer->start(30);
+    qDebug("p, s: %d, %d\n",port,sig);
 
-    BroadcastClient *bc = new BroadcastClient();
+    BroadcastClient *bc = new BroadcastClient(this, port, sig);
 
     connect(bc, SIGNAL(timeUpdate(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(bc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
@@ -41,19 +61,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(newPort(uint)), bc, SLOT(setListeningPort(uint)));
     connect(this, SIGNAL(newID(uint)), bc, SLOT(setSignature(uint)));
 
-    // command line parsing
-    QStringList args = QCoreApplication::arguments();
-    int argc = args.size();
-    if(argc>1){
-        unsigned int port = args.at(1).toInt();
-        ui->portBox->setValue(port);
-        triggerPort();
-    }
-    if(argc>2){
-        unsigned int id = args.at(2).toInt();
-        ui->idBox->setValue(id);
-        triggerId();
-    }
 }
 
 MainWindow::~MainWindow()
@@ -61,10 +68,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::triggerId(){
-    emit newID((unsigned int)(ui->idBox->value()));
-}
+//void MainWindow::triggerId(){
+//    emit newID((unsigned int)(ui->idBox->value()));
+//}
 
-void MainWindow::triggerPort(){
-    emit newPort((unsigned int)(ui->portBox->value()));
-}
+//void MainWindow::triggerPort(){
+//    emit newPort((unsigned int)(ui->portBox->value()));
+//}

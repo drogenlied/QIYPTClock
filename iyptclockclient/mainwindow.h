@@ -33,8 +33,8 @@ public:
     ~MainWindow();
 
 public slots:
-    void triggerId();
-    void triggerPort();
+//    void triggerId();
+//    void triggerPort();
 
 signals:
     void newID(unsigned int);
