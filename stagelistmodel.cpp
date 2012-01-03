@@ -64,7 +64,7 @@ QVariant StageListModel::data(const QModelIndex &index, int role) const {
         Stage stage = listOfStages.at(index.row());
 
         if (index.column() == 0)
-            return stage.duration;
+            return stage.duration.toString("mm:ss");
         else if (index.column() == 1)
             return stage.name;
         else if (index.column() == 2)
@@ -124,10 +124,9 @@ bool StageListModel::removeRows(int position, int rows, const QModelIndex &index
 bool StageListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     if (index.isValid() && role == Qt::EditRole) {
         int row = index.row();
-        QTime tmpt = QTime(0,0,0);
         Stage p = listOfStages.value(row);
         if (index.column() == 0)
-            p.duration = tmpt.addSecs(value.toInt());
+            p.duration = QTime::fromString(value.toString(), "mm:ss");
         else if (index.column() == 1)
             p.name = value.toString();
         else if (index.column() == 2)
