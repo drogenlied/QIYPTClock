@@ -18,11 +18,29 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFile>
+#include <tclap/CmdLine.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    unsigned int sig, port;
+    try {
+        TCLAP::CmdLine cmd("iyptclock", ' ', "0.9");
+        TCLAP::ValueArg<unsigned int> portArg("p", "port","Port to listen on", false, 54545, "unsigned integer");
+        TCLAP::ValueArg<unsigned int> sigArg("s", "signature","Signature to use", false, 123456 , "unsigned integer");
+
+        cmd.add( portArg );
+        cmd.add( sigArg );
+        cmd.parse( QApplication::argc(), QApplication::argv() );
+
+        port = portArg.getValue();
+        sig = sigArg.getValue();
+
+    } catch (TCLAP::ArgException &e) {
+        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
+    }
+
     ui->setupUi(this);
 
     connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
@@ -63,7 +81,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(lc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));
     connect(lc, SIGNAL(modelChanged(QAbstractTableModel*)), this, SLOT(propagateModel(QAbstractTableModel*)));
 
-    bs = new BroadcastServer();
+    ui->portBox->setValue(port);
+    ui->idBox->setValue(sig);
+
+    bs = new BroadcastServer(this, port, sig);
 
     connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));
@@ -84,21 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer2 = new QTimer();
     connect(timer2, SIGNAL(timeout()), this, SLOT(toggleStartPause()));
-    timer2->start(100);
-
-    // command line parsing
-    QStringList args = QCoreApplication::arguments();
-    int argc = args.size();
-    if(argc>1){
-        unsigned int port = args.at(1).toInt();
-        ui->portBox->setValue(port);
-        triggerPort();
-    }
-    if(argc>2){
-        unsigned int id = args.at(2).toInt();
-        ui->idBox->setValue(id);
-        triggerId();
-    }
+    timer2->start(100);    
 }
 
 MainWindow::~MainWindow()
