@@ -44,6 +44,7 @@ BroadcastClient::~BroadcastClient(){
 }
 
 void BroadcastClient::setListeningPort(unsigned int p){
+    udpSocket->close();
     if(p > 0){
         port = p%65536;
     }else{
