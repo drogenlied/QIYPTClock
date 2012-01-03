@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ../themeclockwidget.cpp \
-    multibroadcastclient.cpp
+    multibroadcastclient.cpp \
+    signalhelper.cpp
 
 HEADERS  += \
     ../themeclockwidget.h \
     mainwindow.h \
-    multibroadcastclient.h
+    multibroadcastclient.h \
+    signalhelper.h
 
 FORMS    += mainwindow.ui
