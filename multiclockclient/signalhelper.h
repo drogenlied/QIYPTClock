@@ -3,15 +3,18 @@
 
 #include <QObject>
 
-template <class T> class SignalHelper : public QObject
+class SignalHelper : public QObject
 {
     Q_OBJECT
 public:
     explicit SignalHelper(QObject *parent = 0);
-    void fireSignal(T);g
+    void fireSignal(int s);
 
 signals:
-    void sig(T);
+    void allowedTimeChanged(int);
+    void timeUpdate(int);
+    void timeUpdate(QString);
+    void stageNameChanged(QString);
 
 public slots:
 
