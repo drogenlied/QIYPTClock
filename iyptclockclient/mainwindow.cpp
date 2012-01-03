@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QTimer *timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
     timer->start(30);
-    qDebug("p, s: %d, %d\n",port,sig);
+//    qDebug("p, s: %d, %d\n",port,sig);
 
     BroadcastClient *bc = new BroadcastClient(this, port, sig);
 
