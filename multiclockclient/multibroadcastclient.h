@@ -2,6 +2,8 @@
 #define MULTIBROADCASTCLIENT_H
 
 #include <QObject>
+#include <QVector>
+#include <QPair>
 
 class MultiBroadcastClient : public QObject
 {
@@ -12,7 +14,10 @@ public:
 signals:
 
 public slots:
+    void loadFromFile(QString path);
 
+private:
+    QVector<QPair<unsigned int, unsigned int> > lst;
 };
 
 #endif // MULTIBROADCASTCLIENT_H

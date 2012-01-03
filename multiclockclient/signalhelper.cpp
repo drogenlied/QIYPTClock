@@ -5,6 +5,6 @@ SignalHelper::SignalHelper(QObject *parent) :
 {
 }
 
-void SignalHelper<X>::fireSignal(unsigned int s){
+void SignalHelper::fireSignal(int s){
     emit sig(s);
 }
