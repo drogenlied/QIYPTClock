@@ -8,7 +8,7 @@ template <class T> class SignalHelper : public QObject
     Q_OBJECT
 public:
     explicit SignalHelper(QObject *parent = 0);
-    void fireSignal(T);
+    void fireSignal(T);g
 
 signals:
     void sig(T);
