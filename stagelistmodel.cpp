@@ -145,7 +145,7 @@ bool StageListModel::setData(const QModelIndex &index, const QVariant &value, in
 Qt::ItemFlags StageListModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return Qt::ItemIsEnabled;
-    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 QList<Stage> StageListModel::getList(){
@@ -172,4 +172,8 @@ QColor StageListModel::getHighlightColor(){
 void StageListModel::setHighlightColor(QColor color){
     highlightColor = color;
     emit dataChanged(this->index(highlightedRow,0),this->index(highlightedRow,this->columnCount()-1));
+}
+
+Qt::DropActions StageListModel::supportedDropActions() const {
+    return Qt::CopyAction | Qt::MoveAction;
 }

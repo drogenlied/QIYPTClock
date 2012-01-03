@@ -56,6 +56,7 @@ public:
     void setHighlightedRow(int row);
     QColor getHighlightColor();
     void setHighlightColor(QColor highlightColor);
+    Qt::DropActions supportedDropActions() const;
 
 private:
     QList<Stage> listOfStages;
