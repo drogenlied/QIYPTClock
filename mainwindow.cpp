@@ -85,6 +85,20 @@ MainWindow::MainWindow(QWidget *parent) :
     timer2 = new QTimer();
     connect(timer2, SIGNAL(timeout()), this, SLOT(toggleStartPause()));
     timer2->start(100);
+
+    // command line parsing
+    QStringList args = QCoreApplication::arguments();
+    int argc = args.size();
+    if(argc>1){
+        unsigned int port = args.at(1).toInt();
+        ui->portBox->setValue(port);
+        triggerPort();
+    }
+    if(argc>2){
+        unsigned int id = args.at(2).toInt();
+        ui->idBox->setValue(id);
+        triggerId();
+    }
 }
 
 MainWindow::~MainWindow()

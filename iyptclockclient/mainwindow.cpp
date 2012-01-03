@@ -40,6 +40,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));
     connect(this, SIGNAL(newPort(uint)), bc, SLOT(setListeningPort(uint)));
     connect(this, SIGNAL(newID(uint)), bc, SLOT(setSignature(uint)));
+
+    // command line parsing
+    QStringList args = QCoreApplication::arguments();
+    int argc = args.size();
+    if(argc>1){
+        unsigned int port = args.at(1).toInt();
+        ui->portBox->setValue(port);
+        triggerPort();
+    }
+    if(argc>2){
+        unsigned int id = args.at(2).toInt();
+        ui->idBox->setValue(id);
+        triggerId();
+    }
 }
 
 MainWindow::~MainWindow()
