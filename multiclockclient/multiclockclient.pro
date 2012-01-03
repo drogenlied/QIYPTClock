@@ -13,11 +13,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ../themeclockwidget.cpp \
-    ../iyptclockclient/broadcastclient.cpp
+    multibroadcastclient.cpp
 
 HEADERS  += \
     ../themeclockwidget.h \
     mainwindow.h \
-    ../iyptclockclient/broadcastclient.h
+    multibroadcastclient.h
 
 FORMS    += mainwindow.ui
