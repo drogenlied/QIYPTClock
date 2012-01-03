@@ -32,7 +32,7 @@
          </font>
         </property>
         <property name="text">
-         <string>current task goes here</string>
+         <string>Physics fight hasn't started yet</string>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
