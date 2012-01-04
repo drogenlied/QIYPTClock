@@ -35,6 +35,7 @@ void MainWindow::createClock(SignalHelper* sh){
     //qDebug("New clock: %s\n", sh->getTitle().toStdString().c_str());
     QVBoxLayout *b = new QVBoxLayout();
     ThemeClockWidget *w = new ThemeClockWidget();
+    w->setRenderHint(QPainter::Antialiasing);
     QLabel *l = new QLabel(sh->getTitle());
     QLabel *t = new QLabel("Fight has not begun yet.");
     QLCDNumber *n = new QLCDNumber(5);
