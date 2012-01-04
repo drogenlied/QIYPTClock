@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QLCDNumber>
 #include <QLabel>
+#include <QFile>
 #include "../themeclockwidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -18,7 +19,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m = new MultiBroadcastClient();
     connect(m, SIGNAL(newClock(SignalHelper*)), this, SLOT(createClock(SignalHelper*)));
-    m->loadFromFile("fights.txt");
+
+    if (QFile("fights.txt").exists()){
+        m->loadFromFile("fights.txt");
+    } else if (QFile("/usr/share/iyptclock/fights.txt").exists()){
+        m->loadFromFile("/usr/share/iyptclock/fights.txt");
+    } else {
+        m->loadFromFile("~/.fights.txt");
+    }
     elementNr = 0;
     timer->start(1000);
 }
