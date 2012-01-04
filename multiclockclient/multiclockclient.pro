@@ -14,12 +14,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     ../themeclockwidget.cpp \
     multibroadcastclient.cpp \
-    signalhelper.cpp
+    signalhelper.cpp \
+    sockethelper.cpp
 
 HEADERS  += \
     ../themeclockwidget.h \
     mainwindow.h \
     multibroadcastclient.h \
-    signalhelper.h
+    signalhelper.h \
+    sockethelper.h
 
 FORMS    += mainwindow.ui

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
+#include <QTimer>
 #include "signalhelper.h"
 #include "multibroadcastclient.h"
 
@@ -26,6 +27,7 @@ private:
     QGridLayout *grid;
     MultiBroadcastClient *m;
     int elementNr;
+    QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

@@ -13,10 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
     grid = new QGridLayout(ui->centralWidget);
     ui->centralWidget->setLayout(grid);
 
+    timer = new QTimer();
+
+
     m = new MultiBroadcastClient();
     connect(m, SIGNAL(newClock(SignalHelper*)), this, SLOT(createClock(SignalHelper*)));
     m->loadFromFile("fights.txt");
     elementNr = 0;
+    timer->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +44,7 @@ void MainWindow::createClock(SignalHelper* sh){
     connect(sh, SIGNAL(timeUpdate(QString)), n, SLOT(display(QString)));
     connect(sh, SIGNAL(stageNameChanged(QString)), t, SLOT(setText(QString)));
     connect(sh, SIGNAL(allowedTimeChanged(int)), w,SLOT(setAllowedTime(int)));
+    connect(timer, SIGNAL(timeout()), w, SLOT(act()));
 
     b->addWidget(l);
     b->addWidget(t);

@@ -16,26 +16,27 @@ void MultiBroadcastClient::loadFromFile(QString path){
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
-    lst.clear();
+    mp.clear();
 
     QTextStream in(&file);
     while (!in.atEnd()) {
-        QPair<QPair<unsigned int, unsigned int>, SignalHelper* > elem;
         QString line = in.readLine();
         QStringList sl = line.split(QChar('\t'));
         if(sl.size() == 3){
-             elem.first.first = sl.value(0).toInt();
-             elem.first.second = sl.value(1).toInt();
-             QString s = sl.at(2);
-             elem.second = new SignalHelper(this, s);
-             lst.append(elem);
+             int port = sl.value(0).toInt();
+             int signature = sl.value(1).toInt();
+             QString title = sl.at(2);
+             SignalHelper *sh = new SignalHelper(title);
+
+             if (mp.contains(port)){
+                 mp[port]->setSignalHelper(signature, sh);
+             } else {
+                 mp.insert(port, new SocketHelper(port));
+                 mp[port]->setSignalHelper(signature, sh);
+             }
              //qDebug("blub! %d %d %d\n",sl.value(0).toInt(), sl.value(1).toInt(), s.size() );
+             emit newClock(sh);
         }
     }
     file.close();
-
-    for(int i = 0; i < lst.size(); ++i){
-        emit newClock(lst.at(i).second);
-    }
-    //qDebug("blub! %d\n",lst.size());
 }

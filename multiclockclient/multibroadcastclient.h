@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QVector>
-#include <QPair>
+#include <QMap>
 #include "signalhelper.h"
+#include "sockethelper.h"
 
 class MultiBroadcastClient : public QObject
 {
@@ -19,7 +20,7 @@ public slots:
     void loadFromFile(QString path);
 
 private:
-    QVector<QPair<QPair<unsigned int, unsigned int>, SignalHelper*> > lst;
+    QMap<unsigned int, SocketHelper*> mp;
 };
 
 #endif // MULTIBROADCASTCLIENT_H
