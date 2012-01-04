@@ -4,7 +4,15 @@ SignalHelper::SignalHelper(QObject *parent) :
     QObject(parent)
 {
 }
+SignalHelper::SignalHelper(QObject *parent, QString t) :
+    QObject(parent)
+{
+    title = t;
+}
 
 void SignalHelper::fireSignal(int s){
-    emit sig(s);
+}
+
+QString SignalHelper::getTitle(){
+    return title;
 }
