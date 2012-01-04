@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {   
-    unsigned int sig, port;
+    unsigned int sig = 123456, port = 54545;
     try {
         TCLAP::CmdLine cmd("iyptclockclient", ' ', "0.9");
         TCLAP::ValueArg<unsigned int> portArg("p","port","Port to listen on",false, 54545,"unsigned integer");
