@@ -25,7 +25,7 @@ class BroadcastServer : public QObject
 {
     Q_OBJECT
 public:
-    explicit BroadcastServer(QObject *parent = 0, unsigned int port = 54545, unsigned int signature = 123456);
+    explicit BroadcastServer(QObject *parent = 0, QHostAddress addr = QHostAddress::Broadcast, unsigned int port = 54545, unsigned int signature = 123456);
     ~BroadcastServer();
 
 signals:
@@ -36,6 +36,7 @@ public slots:
     void setStageName(QString);
     void setAllowedTime(int);
     void updateTime(int);
+    void setBroadcastAddress(QHostAddress);
     void setBroadcastPort(unsigned int);
     void setSignature(unsigned int);
 
@@ -44,6 +45,7 @@ private slots:
 
 private:
     QUdpSocket *udpSocket;
+    QHostAddress broadcastAddress;
     QString stagename;
     int allowedtime, time;
     unsigned int port, signature;

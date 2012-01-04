@@ -19,7 +19,7 @@
 #include <QDataStream>
 #include <QtNetwork>
 
-BroadcastServer::BroadcastServer(QObject *parent, unsigned int p, unsigned int sig) :
+BroadcastServer::BroadcastServer(QObject *parent, QHostAddress addr, unsigned int p, unsigned int sig) :
     QObject(parent)
 {
     udpSocket = new QUdpSocket(this);
@@ -29,6 +29,7 @@ BroadcastServer::BroadcastServer(QObject *parent, unsigned int p, unsigned int s
         port = 54545;
     }
     signature = sig;
+    broadcastAddress = addr;
     connect(this, SIGNAL(updated()), this, SLOT(broadcast()));
 }
 
@@ -52,6 +53,10 @@ void BroadcastServer::updateTime(int t){
     emit updated();
 }
 
+void BroadcastServer::setBroadcastAddress(QHostAddress addr){
+    broadcastAddress = addr;
+}
+
 void BroadcastServer::setBroadcastPort(unsigned int p){
     if (p>0)
         port = p%65536;
@@ -70,5 +75,5 @@ void BroadcastServer::broadcast(){
     dgstream << (quint32)time;
     dgstream << stagename;
     //qDebug("dgram: %d", datagram.size());
-    udpSocket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, port);
+    udpSocket->writeDatagram(datagram.data(), datagram.size(), broadcastAddress, port);
 }

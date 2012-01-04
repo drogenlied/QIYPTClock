@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->portBox->setValue(port);
     ui->idBox->setValue(sig);
 
-    bs = new BroadcastServer(this, port, sig);
+    bs = new BroadcastServer(this, QHostAddress::Broadcast, port, sig);
 
     connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));
