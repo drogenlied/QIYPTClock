@@ -4,6 +4,7 @@
 #include <QLCDNumber>
 #include <QLabel>
 #include <QFile>
+#include <QFont>
 #include "../themeclockwidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -45,7 +46,14 @@ void MainWindow::createClock(SignalHelper* sh){
     ThemeClockWidget *w = new ThemeClockWidget();
     w->setRenderHint(QPainter::Antialiasing);
     QLabel *l = new QLabel(sh->getTitle());
+    QFont f = l->font();
+    f.setBold(true);
+    f.setPointSize(15);
+    l->setFont(f);
     QLabel *t = new QLabel("Fight has not begun yet.");
+    f = t->font();
+    f.setPointSize(12);
+    t->setFont(f);
     QLCDNumber *n = new QLCDNumber(5);
     n->setSegmentStyle(QLCDNumber::Flat);
 

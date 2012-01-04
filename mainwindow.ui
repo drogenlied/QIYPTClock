@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>967</width>
-    <height>564</height>
+    <width>963</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,12 +27,13 @@
         </property>
         <property name="font">
          <font>
+          <pointsize>20</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
         <property name="text">
-         <string>Physics fight hasn't started yet</string>
+         <string>Physics fight has not started yet</string>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -352,7 +353,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>967</width>
+     <width>963</width>
      <height>22</height>
     </rect>
    </property>
@@ -362,7 +363,14 @@
     </property>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_IYPTClock"/>
+   </widget>
    <addaction name="menuMain"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -379,6 +387,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionAbout_IYPTClock">
+   <property name="text">
+    <string>About IYPTClock</string>
    </property>
   </action>
  </widget>
