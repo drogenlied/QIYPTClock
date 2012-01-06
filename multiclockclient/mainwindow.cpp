@@ -11,12 +11,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    grid = new QGridLayout(ui->centralWidget);
-    ui->centralWidget->setLayout(grid);
-
     timer = new QTimer();
-
+    elementNr = 0;
+    ui->setupUi(this);
+    grid = new QGridLayout();
+    ui->centralWidget->setLayout(grid);
 
     m = new MultiBroadcastClient();
     connect(m, SIGNAL(newClock(SignalHelper*)), this, SLOT(createClock(SignalHelper*)));
@@ -26,10 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
     } else if (QFile("/usr/share/iyptclock/fights.txt").exists()){
         m->loadFromFile("/usr/share/iyptclock/fights.txt");
     } else {
-        m->loadFromFile("~/.fights.txt");
+       qWarning("No valid configuration found");
+       QApplication::quit();
     }
-    elementNr = 0;
+
     timer->start(1000);
+    //qDebug("mainwindow finished");
 }
 
 MainWindow::~MainWindow()

@@ -8,6 +8,7 @@
 MultiBroadcastClient::MultiBroadcastClient(QObject *parent) :
     QObject(parent)
 {
+    mp.clear();
 }
 
 void MultiBroadcastClient::loadFromFile(QString path){
@@ -34,9 +35,10 @@ void MultiBroadcastClient::loadFromFile(QString path){
                  mp.insert(port, new SocketHelper(port));
                  mp[port]->setSignalHelper(signature, sh);
              }
-             //qDebug("blub! %d %d %d\n",sl.value(0).toInt(), sl.value(1).toInt(), s.size() );
+             //qDebug("blub! %d %d %d\n",sl.value(0).toInt(), sl.value(1).toInt(), mp.size() );
              emit newClock(sh);
         }
     }
     file.close();
+    //qDebug("blub");
 }

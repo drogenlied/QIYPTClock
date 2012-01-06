@@ -15,6 +15,7 @@ SocketHelper::SocketHelper(unsigned int p, QObject *parent) :
     udpSocket->bind(port, QUdpSocket::ShareAddress);
 
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processDatagrams()));
+    //qDebug("Socket: %d\n",port);
 }
 
 void SocketHelper::setSignalHelper(unsigned int signature, SignalHelper* s){
@@ -43,4 +44,5 @@ void SocketHelper::processDatagrams(){
             sigmap[nsignature]->fireSignal(ntime, nallowedtime, nstagename);
         }
     }
+    //qDebug("process Datagram: %d ", nsignature);
 }
