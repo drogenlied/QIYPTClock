@@ -118,6 +118,7 @@ void ThemeClockWidget::resizeEvent(QResizeEvent *event){
 }
 
 void ThemeClockWidget::act(){
+    //qDebug("Acting");
     bg->setSpanAngle(-round(((double)time*360*16)/(double)maxtime));
 
     if(time < maxtime/6*5) // over 5/6 of time left
