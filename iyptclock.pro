@@ -11,11 +11,13 @@ SOURCES += main.cpp \
     themeclock.cpp \
     listcontroller.cpp \
     broadcastserver.cpp \
-    stagelistmodel.cpp
+    stagelistmodel.cpp \
+    qresizablelabel.cpp
 HEADERS += mainwindow.h \
     themeclock.h \
     listcontroller.h \
     broadcastserver.h \
-    stagelistmodel.h
+    stagelistmodel.h \
+    qresizablelabel.h
 FORMS += mainwindow.ui
 include(themeclockwidget.pri)
