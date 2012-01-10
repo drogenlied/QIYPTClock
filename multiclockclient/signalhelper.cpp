@@ -11,6 +11,10 @@ SignalHelper::SignalHelper(QString t, QObject *parent) :
       stageName = "";
 }
 
+SignalHelper::~SignalHelper(){
+    qDebug("SignalHelper died");
+}
+
 void SignalHelper::fireSignal(quint32 ntime, quint32 nallowedTime, QString nstageName){
     if (time != ntime){
         time = ntime;

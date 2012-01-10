@@ -11,7 +11,9 @@ class SocketHelper : public QObject
     Q_OBJECT
 public:
     explicit SocketHelper(unsigned int port = 54545, QObject *parent = 0);
+    ~SocketHelper();
     void setSignalHelper(unsigned int signature, SignalHelper* s);
+
 signals:
 
 private slots:

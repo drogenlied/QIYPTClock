@@ -18,6 +18,15 @@ SocketHelper::SocketHelper(unsigned int p, QObject *parent) :
     //qDebug("Socket: %d\n",port);
 }
 
+SocketHelper::~SocketHelper(){
+    for(QMap<unsigned int,SignalHelper*>::Iterator i = sigmap.begin(); i != sigmap.end() ; i++){
+        delete i.value();
+    }
+    sigmap.clear();
+    delete udpSocket;
+    qDebug("SocketHelper %d died", port);
+}
+
 void SocketHelper::setSignalHelper(unsigned int signature, SignalHelper* s){
     if(sigmap.contains(signature)){
         sigmap[signature] = s;

@@ -1,16 +1,37 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QLCDNumber>
 #include <QLabel>
+#include <QLayout>
 #include <QFile>
 #include <QFont>
+#include <tclap/CmdLine.h>
+#include <string>
 #include "../themeclockwidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    airportMode = true;
+
+    try {
+        TCLAP::CmdLine cmd("iyptclock", ' ', "0.9");
+        //TCLAP::ValueArg<unsigned int> portArg("p", "port","Port to listen on", false, 54545, "unsigned integer");
+        //TCLAP::ValueArg<unsigned int> sigArg("s", "signature","Signature to use", false, 123456 , "unsigned integer");
+        //TCLAP::ValueArg<std::string> bcastArg("b", "broadcast","Broadcast address to send packets to", false, "255.255.255.255", "ip address");
+        TCLAP::SwitchArg airport("a", "airport", "Airport-like interface");
+
+        cmd.add( airport );
+        cmd.parse( QApplication::argc(), QApplication::argv() );
+        airportMode = airport.getValue();
+
+    } catch (TCLAP::ArgException &e) {
+        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
+    }
+
     timer = new QTimer();
     elementNr = 0;
     ui->setupUi(this);
@@ -35,39 +56,73 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete timer;
     delete m;
+    QObjectList ch = grid->children();
+    for(QObjectList::Iterator i = ch.begin(); i != ch.end() ; i++){
+        delete (*i);
+    }
     delete grid;
     delete ui;
+    qDebug("MainWindow died");
 }
 
 
 void MainWindow::createClock(SignalHelper* sh){
     //qDebug("New clock: %s\n", sh->getTitle().toStdString().c_str());
-    QVBoxLayout *b = new QVBoxLayout();
-    ThemeClockWidget *w = new ThemeClockWidget();
-    w->setRenderHint(QPainter::Antialiasing);
-    QLabel *l = new QLabel(sh->getTitle());
-    QFont f = l->font();
-    f.setBold(true);
-    f.setPointSize(15);
-    l->setFont(f);
-    QLabel *t = new QLabel("Fight has not begun yet.");
-    f = t->font();
-    f.setPointSize(12);
-    t->setFont(f);
-    QLCDNumber *n = new QLCDNumber(5);
-    n->setSegmentStyle(QLCDNumber::Flat);
 
-    connect(sh, SIGNAL(timeUpdate(int)), w, SLOT(setTime(int)));
-    connect(sh, SIGNAL(timeUpdate(QString)), n, SLOT(display(QString)));
-    connect(sh, SIGNAL(stageNameChanged(QString)), t, SLOT(setText(QString)));
-    connect(sh, SIGNAL(allowedTimeChanged(int)), w,SLOT(setAllowedTime(int)));
-    connect(timer, SIGNAL(timeout()), w, SLOT(act()));
+    if (airportMode){
+        QHBoxLayout *b = new QHBoxLayout();
 
-    b->addWidget(l);
-    b->addWidget(t);
-    b->addWidget(w);
-    b->addWidget(n);
-    grid->addLayout(b, elementNr /4, elementNr%4, 1, 1);
+        QLabel *l = new QLabel(sh->getTitle());
+        QFont f = l->font();
+        f.setBold(true);
+        f.setPointSize(15);
+        l->setFont(f);
+        QLabel *t = new QLabel("Fight has not begun yet.");
+        f = t->font();
+        f.setPointSize(12);
+        t->setFont(f);
+        QLCDNumber *n = new QLCDNumber(5);
+        n->setSegmentStyle(QLCDNumber::Flat);
+
+        //connect(sh, SIGNAL(timeUpdate(int)), w, SLOT(setTime(int)));
+        connect(sh, SIGNAL(timeUpdate(QString)), n, SLOT(display(QString)));
+        connect(sh, SIGNAL(stageNameChanged(QString)), t, SLOT(setText(QString)));
+        //connect(sh, SIGNAL(allowedTimeChanged(int)), w,SLOT(setAllowedTime(int)));
+        //connect(timer, SIGNAL(timeout()), w, SLOT(act()));
+
+        b->addWidget(l);
+        b->addWidget(t);
+        b->addWidget(n);
+        grid->addLayout(b, elementNr, 0, 1, 1);
+    } else {
+        QVBoxLayout *b = new QVBoxLayout();
+        ThemeClockWidget *w = new ThemeClockWidget();
+        w->setRenderHint(QPainter::Antialiasing);
+        QLabel *l = new QLabel(sh->getTitle());
+        QFont f = l->font();
+        f.setBold(true);
+        f.setPointSize(15);
+        l->setFont(f);
+        QLabel *t = new QLabel("Fight has not begun yet.");
+        f = t->font();
+        f.setPointSize(12);
+        t->setFont(f);
+        QLCDNumber *n = new QLCDNumber(5);
+        n->setSegmentStyle(QLCDNumber::Flat);
+
+        connect(sh, SIGNAL(timeUpdate(int)), w, SLOT(setTime(int)));
+        connect(sh, SIGNAL(timeUpdate(QString)), n, SLOT(display(QString)));
+        connect(sh, SIGNAL(stageNameChanged(QString)), t, SLOT(setText(QString)));
+        connect(sh, SIGNAL(allowedTimeChanged(int)), w,SLOT(setAllowedTime(int)));
+        connect(timer, SIGNAL(timeout()), w, SLOT(act()));
+
+        b->addWidget(l);
+        b->addWidget(t);
+        b->addWidget(w);
+        b->addWidget(n);
+        grid->addLayout(b, elementNr /4, elementNr%4, 1, 1);
+    }
     elementNr++;
 }

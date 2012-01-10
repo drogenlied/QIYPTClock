@@ -28,6 +28,7 @@ private:
     MultiBroadcastClient *m;
     int elementNr;
     QTimer *timer;
+    bool airportMode;
 };
 
 #endif // MAINWINDOW_H

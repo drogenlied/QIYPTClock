@@ -110,6 +110,7 @@ ThemeClockWidget::~ThemeClockWidget() {
     delete bg;
     delete mg;
     delete fg;
+    qDebug("ThemeClockWidget died");
 }
 
 void ThemeClockWidget::resizeEvent(QResizeEvent *event){

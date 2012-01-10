@@ -11,6 +11,13 @@ MultiBroadcastClient::MultiBroadcastClient(QObject *parent) :
     mp.clear();
 }
 
+MultiBroadcastClient::~MultiBroadcastClient(){
+    for(QMap<unsigned int,SocketHelper*>::Iterator i = mp.begin(); i != mp.end() ; i++){
+        delete i.value();
+    }
+    qDebug("MultiBroadcastClient died");
+}
+
 void MultiBroadcastClient::loadFromFile(QString path){
     QFile file(path);
 

@@ -8,5 +8,7 @@ int main(int argc, char *argv[])
     //qDebug("show dat stuff");
     w.show();
     //qDebug("now exec!");
-    return a.exec();
+    int ret = a.exec();
+    qDebug("Finished.");
+    return ret;
 }

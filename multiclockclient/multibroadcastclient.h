@@ -12,6 +12,7 @@ class MultiBroadcastClient : public QObject
     Q_OBJECT
 public:
     explicit MultiBroadcastClient(QObject *parent = 0);
+    ~MultiBroadcastClient();
 
 signals:
     void newClock(SignalHelper*);
