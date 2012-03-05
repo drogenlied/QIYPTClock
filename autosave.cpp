@@ -1,12 +1,32 @@
-#include "autosave.h"
+#include <QFile>
+#include <QtConcurrentRun>
 
-AutoSave::AutoSave(QObject *parent, MainWindow *mw, QString *dest) :
+#include "autosave.h"
+#include "listcontroller.h"
+#include "themeclock.h"
+#include "mainwindow.h"
+
+AutoSave::AutoSave(MainWindow *mw, QString dest, QObject *parent) :
     QObject(parent)
 {
     this->mw = mw;
     this->dest = dest;
 }
+void AutoSave::writeToDisk(int step, int time)
+{
+    QFile file(dest);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QTextStream out(&file);
+    out << step << "\n" << time << "\n";
+
+    file.close();
+}
+
 void AutoSave::save()
 {
-    mw->lc->
+    int current = mw->lc->getCurrentIndex();
+    int time = mw->thc->getElapsedTime();
+    QtConcurrent::run(this, &AutoSave::writeToDisk, current, time);
 }

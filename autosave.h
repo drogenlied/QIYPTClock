@@ -3,11 +3,13 @@
 
 #include <QObject>
 
+class MainWindow;
+
 class AutoSave : public QObject
 {
     Q_OBJECT
 public:
-    explicit AutoSave(QObject *parent = 0,MainWindow *mw, QString *dest);
+    explicit AutoSave(MainWindow *mw, QString dest, QObject *parent = 0);
     
 signals:
     
@@ -16,7 +18,8 @@ public slots:
 
 private:
     MainWindow *mw;
-    QString *dest;
+    QString dest;
+    void writeToDisk(int step, int time);
 };
 
 #endif // AUTOSAVE_H

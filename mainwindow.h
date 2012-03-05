@@ -23,6 +23,7 @@
 #include "themeclock.h"
 #include "listcontroller.h"
 #include "broadcastserver.h"
+#include "autosave.h"
 #include <QtCore/QTimer>
 
 namespace Ui {
@@ -53,9 +54,10 @@ signals:
 protected:
     void changeEvent(QEvent *e);
 
+friend class AutoSave;
 private:
     Ui::MainWindow *ui;
-    QTimer *timer, *timer2;
+    QTimer *timer, *timer2, *timer3;
     ThemeClock *thc;
     ListController *lc;
     BroadcastServer *bs;
