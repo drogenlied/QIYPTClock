@@ -129,3 +129,7 @@ void ListController::add(){
 void ListController::del(QModelIndex ind){
     stlm->removeRows(ind.row(),1);
 }
+
+int ListController::getCurrentIndex(){
+    return currentIndex;
+}

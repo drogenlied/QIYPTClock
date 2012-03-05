@@ -29,6 +29,7 @@ public:
     explicit ThemeClock(QObject *parent = 0);
     ~ThemeClock();
     QString toString();
+    int getElapsedTime();
     bool isRunning();
 
 signals:

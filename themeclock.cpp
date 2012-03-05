@@ -46,6 +46,10 @@ void ThemeClock::startorpause(){
     emit allowedTimeChanged(maxtime);
 }
 
+int ThemeClock::getElapsedTime(){
+    return t->elapsed();
+}
+
 void ThemeClock::setElapsedTime(int ms){
     if (ms > 0)
     {
