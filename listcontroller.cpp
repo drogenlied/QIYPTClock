@@ -133,3 +133,14 @@ void ListController::del(QModelIndex ind){
 int ListController::getCurrentIndex(){
     return currentIndex;
 }
+
+void ListController::setCurrentIndex(int currentIndex){
+    QTime tmpt = QTime(0,0,0);
+    if(currentIndex >= 0 && currentIndex <= stlm->rowCount()-1){
+        this->currentIndex = currentIndex;
+        stlm->setHighlightedRow(currentIndex);
+        Stage st = stlm->getList().value(currentIndex);
+        emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit stageNameChanged(st.name);
+    }
+}

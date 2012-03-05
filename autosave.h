@@ -10,6 +10,7 @@ class AutoSave : public QObject
     Q_OBJECT
 public:
     explicit AutoSave(MainWindow *mw, QString dest, QObject *parent = 0);
+    void load();
     
 signals:
     

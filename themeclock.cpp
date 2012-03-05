@@ -47,11 +47,11 @@ void ThemeClock::startorpause(){
 }
 
 int ThemeClock::getElapsedTime(){
-    return t->elapsed();
+    return running ? t->elapsed() : savedtime;
 }
 
 void ThemeClock::setElapsedTime(int ms){
-    if (ms > 0)
+    if (ms >= 0)
     {
         t->start();
         *t = t->addMSecs(-ms);

@@ -31,6 +31,7 @@ public:
     int loadListFromFile(QString path);
     int saveListToFile(QString path);
     int getCurrentIndex();
+    void setCurrentIndex(int currentIndex);
     QAbstractTableModel* getModel();
 
 signals:

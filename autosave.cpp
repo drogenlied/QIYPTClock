@@ -30,3 +30,33 @@ void AutoSave::save()
     int time = mw->thc->getElapsedTime();
     QtConcurrent::run(this, &AutoSave::writeToDisk, current, time);
 }
+
+void AutoSave::load()
+{
+    QFile file(dest);
+    if (!file.exists()) return;
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
+
+    QTextStream in(&file);
+    QString line;
+    int step=0, time=0;
+
+    if (in.atEnd()) {
+        file.close();
+        return;
+    }
+    line = in.readLine();
+    step = line.toInt();
+
+    if (in.atEnd()) {
+        file.close();
+        return;
+    }
+    line = in.readLine();
+    time = line.toInt();
+
+    file.close();
+
+    mw->lc->setCurrentIndex(step);
+    mw->thc->setElapsedTime(time);
+}
