@@ -40,6 +40,7 @@ signals:
     void stageNameChanged(QString);
     void modelChanged(QAbstractTableModel*);
     void endOfStage();
+    void roomClockChanged(bool);
 
 public slots:
     void forward();

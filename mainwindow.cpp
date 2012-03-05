@@ -82,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->addButton, SIGNAL(clicked()), lc, SLOT(add()));
     connect(this, SIGNAL(itemShouldBeDeleted(QModelIndex)), lc, SLOT(del(QModelIndex)));
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
+    connect(lc, SIGNAL(roomClockChanged(bool)), ui->graphicsView, SLOT(setRoomclock(bool)));
     connect(lc, SIGNAL(resetTime()), thc, SLOT(reset()));
     connect(lc, SIGNAL(endOfStage()), thc, SLOT(stop()));
     connect(lc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));

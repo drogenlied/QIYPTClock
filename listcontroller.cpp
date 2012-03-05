@@ -41,6 +41,7 @@ void ListController::forward(){
         if (!stlm->getList().value(currentIndex-1).carry) emit resetTime();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
+        emit roomClockChanged(st.roomclock);
     } else if (currentIndex >= stlm->rowCount()-1){
         emit endOfStage();
         currentIndex = stlm->rowCount()-1;
@@ -56,6 +57,7 @@ void ListController::backward(){
         if (!st.carry) emit resetTime();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
+        emit roomClockChanged(st.roomclock);
     } else if (currentIndex <= 0){
         emit endOfStage();
         currentIndex = 0;
@@ -80,12 +82,19 @@ int ListController::loadListFromFile(QString path){
                                 tmpt.addMSecs(sl.value(0).toInt()),
                                 sl.value(1))
                             );
-        }else if(sl.size() >= 3){
+        }else if(sl.size() == 3){
             tmplist.append( Stage(
                                 tmpt.addMSecs(sl.value(0).toInt()),
                                 sl.value(1),
                                 (sl.value(2).toUInt() > 0 ? true : false)
                                 ) );
+        }else if(sl.size() >= 3){
+        tmplist.append( Stage(
+                            tmpt.addMSecs(sl.value(0).toInt()),
+                            sl.value(1),
+                            (sl.value(2).toUInt() > 0 ? true : false),
+                            (sl.value(3).toUInt() > 0 ? true : false)
+                            ) );
         }
     }
     oldstlm = stlm;
@@ -99,6 +108,7 @@ int ListController::loadListFromFile(QString path){
         Stage st = stlm->getList().value(currentIndex);
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
+        emit roomClockChanged(st.roomclock);
     }
     return 0;
 }
@@ -112,7 +122,7 @@ int ListController::saveListToFile(QString path){
 
     QTextStream out(&file);
     for(QList<Stage>::iterator t = tmplist.begin(); t != tmplist.end(); t++){
-        out << tmpt.msecsTo(t->duration) << "\t" << t->name << "\t" << (unsigned int)(t->carry ? 1 : 0) << "\n";
+        out << tmpt.msecsTo(t->duration) << "\t" << t->name << "\t" << (unsigned int)(t->carry ? 1 : 0) << "\t" << (unsigned int)(t->roomclock ? 1 : 0) << "\n";
     }
     file.close();
     return 0;
@@ -142,5 +152,6 @@ void ListController::setCurrentIndex(int currentIndex){
         Stage st = stlm->getList().value(currentIndex);
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
+        emit roomClockChanged(st.roomclock);
     }
 }

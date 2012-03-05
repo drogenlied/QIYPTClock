@@ -36,6 +36,7 @@ public:
 public slots:
     void act();
     void setAllowedTime(int ms);
+    void setRoomclock(bool roomclock);
     void setTime(int ms);
 private:
     QGraphicsScene *nscene;
@@ -43,6 +44,10 @@ private:
     //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
     QGraphicsEllipseItem *fg, *mg, *bg, *focus;
     int time, maxtime;
+    bool roomclock;
+    void actRoomclock();
+    void actCake();
+    bool isRoomclock();
     void resizeEvent(QResizeEvent *event);
 };
 

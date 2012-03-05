@@ -23,10 +23,11 @@ Stage::Stage(){
 
 }
 
-Stage::Stage(QTime d, QString n, bool c){
+Stage::Stage(QTime d, QString n, bool c, bool r){
     duration = d;
     name = n;
     carry = c;
+    roomclock = r;
 }
 
 StageListModel::StageListModel(QObject *parent)
@@ -69,6 +70,8 @@ QVariant StageListModel::data(const QModelIndex &index, int role) const {
             return stage.name;
         else if (index.column() == 2)
             return stage.carry;
+        else if (index.column() == 3)
+            return stage.roomclock;
     }
     if (role == Qt::BackgroundRole) {
         if(index.row() == highlightedRow)
@@ -89,6 +92,8 @@ QVariant StageListModel::headerData(int section, Qt::Orientation orientation, in
                 return tr("Stage Description");
              case 2:
                 return tr("Carry Time");
+             case 3:
+                return tr("Room Clock");
              default:
                 return QVariant();
         }
@@ -131,6 +136,8 @@ bool StageListModel::setData(const QModelIndex &index, const QVariant &value, in
             p.name = value.toString();
         else if (index.column() == 2)
             p.carry = value.toBool();
+        else if (index.column() == 3)
+            p.roomclock = value.toBool();
         else
             return false;
 

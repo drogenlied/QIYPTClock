@@ -28,11 +28,12 @@
 class Stage {
 public:
     Stage();
-    Stage(QTime duration, QString name, bool carry = false);
+    Stage(QTime duration, QString name, bool carry = false, bool roomclock = false);
 
     QTime duration;
     QString name;
     bool carry;
+    bool roomclock;
 };
 
 class StageListModel : public QAbstractTableModel

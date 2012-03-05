@@ -54,6 +54,7 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
 
     time = 0;
     maxtime = 1;
+    roomclock = false;
 
 /*
     normal = new QGraphicsSvgItem();
@@ -118,7 +119,7 @@ void ThemeClockWidget::resizeEvent(QResizeEvent *event){
     this->centerOn(focus);
 }
 
-void ThemeClockWidget::act(){
+void ThemeClockWidget::actCake(){
     //qDebug("Acting");
     bg->setSpanAngle(-round(((double)time*360*16)/(double)maxtime));
 
@@ -146,6 +147,19 @@ void ThemeClockWidget::act(){
     }
 }
 
+
+void ThemeClockWidget::actRoomclock(){
+    bg->setSpanAngle(-300);
+    bg->setBrush(QBrush(QColor(150,150,130)));
+    mg->setSpanAngle(0);
+    fg->setSpanAngle(0);
+}
+
+void ThemeClockWidget::act(){
+    if (roomclock) actRoomclock();
+    else actCake();
+}
+
 void ThemeClockWidget::setAllowedTime(int ms){
     if(ms>0){
         maxtime = ms;
@@ -164,4 +178,12 @@ int ThemeClockWidget::getTime(){
 
 int ThemeClockWidget::getAllowedTime(){
     return maxtime;
+}
+
+bool ThemeClockWidget::isRoomclock(){
+    return roomclock;
+}
+
+void ThemeClockWidget::setRoomclock(bool roomclock){
+    this->roomclock = roomclock;
 }
