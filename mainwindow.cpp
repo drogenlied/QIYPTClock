@@ -111,7 +111,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer2 = new QTimer();
     connect(timer2, SIGNAL(timeout()), this, SLOT(toggleStartPause()));
-    timer2->start(100);    
+    timer2->start(100);
+
+    savefile = QString("/var/run/iyptclock/autosave_");
+    savefile += QString.number(sig);
+    as = new AutoSave(this,this,savefile);
+    timer3 = new QTimer();
+    connect(timer3, SIGNAL(timeout()),as,SLOT(save()));
+    timer3->start(10000);
 }
 
 MainWindow::~MainWindow()

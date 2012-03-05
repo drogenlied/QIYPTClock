@@ -12,12 +12,15 @@ SOURCES += main.cpp \
     listcontroller.cpp \
     broadcastserver.cpp \
     stagelistmodel.cpp \
-    qresizablelabel.cpp
+    qresizablelabel.cpp \
+    autosave.cpp
 HEADERS += mainwindow.h \
     themeclock.h \
     listcontroller.h \
     broadcastserver.h \
     stagelistmodel.h \
-    qresizablelabel.h
+    qresizablelabel.h \
+    autosave.h
 FORMS += mainwindow.ui
+INCLUDEPATH += /opt/local/include/
 include(themeclockwidget.pri)

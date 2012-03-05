@@ -59,6 +59,8 @@ private:
     ThemeClock *thc;
     ListController *lc;
     BroadcastServer *bs;
+    QString savefile;
+    AutoSave *as;
     enum {
         TIME_ELAPSED,
         TIME_LEFT
