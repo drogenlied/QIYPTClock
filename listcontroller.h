@@ -30,6 +30,7 @@ public:
 
     int loadListFromFile(QString path);
     int saveListToFile(QString path);
+    int getMaxIndex();
     int getCurrentIndex();
     void setCurrentIndex(int currentIndex);
     QAbstractTableModel* getModel();

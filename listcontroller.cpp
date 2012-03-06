@@ -144,6 +144,10 @@ int ListController::getCurrentIndex(){
     return currentIndex;
 }
 
+int ListController::getMaxIndex(){
+    return stlm->rowCount()-1;
+}
+
 void ListController::setCurrentIndex(int currentIndex){
     QTime tmpt = QTime(0,0,0);
     if(currentIndex >= 0 && currentIndex <= stlm->rowCount()-1){

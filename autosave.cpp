@@ -57,6 +57,8 @@ void AutoSave::load()
 
     file.close();
 
-    mw->lc->setCurrentIndex(step);
-    mw->thc->setElapsedTime(time);
+    if (step != mw->lc->getMaxIndex()){ // load autosave only if last stage wasn't finished
+        mw->lc->setCurrentIndex(step);
+        mw->thc->setElapsedTime(time);
+    }
 }
