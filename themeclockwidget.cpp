@@ -94,7 +94,7 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
         tmp->setBrush(QBrush(QColor(0,0,50)));
         tmp->setPen(QPen(QColor(0,0,0,0)));
         tmp->setPos(150,150);
-        tmp->setRotation(6.0*i);
+        tmp->setRotation(6.0*i+0.001);
         rscene->addItem(tmp);
     }
 
