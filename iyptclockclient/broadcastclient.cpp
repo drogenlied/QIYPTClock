@@ -31,6 +31,7 @@ BroadcastClient::BroadcastClient(QObject *parent, unsigned int p, unsigned int s
 
     time = 0;
     allowedtime = 1;
+    roomclock = 2;
     stagename = "";
 
     udpSocket = new QUdpSocket(this);
@@ -58,7 +59,7 @@ void BroadcastClient::setSignature(unsigned int sig){
 }
 
 void BroadcastClient::processDatagrams(){
-    quint32 nsignature, nallowedtime, ntime;
+    quint32 nsignature, nallowedtime, nroomclock, ntime;
     QString nstagename;
 
     while (udpSocket->hasPendingDatagrams()) {
@@ -69,6 +70,7 @@ void BroadcastClient::processDatagrams(){
         dgstream >> nsignature;
         dgstream >> nallowedtime;
         dgstream >> ntime;
+        dgstream >> nroomclock;
         dgstream >> nstagename;
     }
     if (signature != nsignature)
@@ -82,6 +84,10 @@ void BroadcastClient::processDatagrams(){
     if (allowedtime != nallowedtime){
         allowedtime = nallowedtime;
         emit allowedTimeChanged(allowedtime);
+    }
+    if (roomclock != nroomclock){
+        roomclock = nroomclock;
+        emit roomClockChanged(roomclock > 0);
     }
     if (nstagename != stagename){
         stagename = nstagename;

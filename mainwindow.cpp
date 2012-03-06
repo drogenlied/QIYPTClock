@@ -97,6 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(stopped(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(allowedTimeChanged(int)), bs, SLOT(setAllowedTime(int)));
+    connect(lc, SIGNAL(roomClockChanged(bool)), bs, SLOT(setRoomclock(bool)));
     connect(lc, SIGNAL(stageNameChanged(QString)), bs, SLOT(setStageName(QString)));
     connect(this, SIGNAL(newPort(uint)), bs, SLOT(setBroadcastPort(uint)));
     connect(this, SIGNAL(newID(uint)), bs, SLOT(setSignature(uint)));

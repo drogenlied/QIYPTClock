@@ -55,12 +55,14 @@ MainWindow::MainWindow(QWidget *parent) :
     BroadcastClient *bc = new BroadcastClient(this, port, sig);
 
     connect(bc, SIGNAL(timeUpdate(int)), ui->graphicsView, SLOT(setTime(int)));
+    connect(bc, SIGNAL(roomClockChanged(bool)), ui->graphicsView, SLOT(setRoomclock(bool)));
     connect(bc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
     connect(bc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
     connect(bc, SIGNAL(stageNameChanged(QString)), ui->stageLabel, SLOT(setText(QString)));
     connect(this, SIGNAL(newPort(uint)), bc, SLOT(setListeningPort(uint)));
     connect(this, SIGNAL(newID(uint)), bc, SLOT(setSignature(uint)));
 
+    ui->graphicsView->setRoomclock(true);
 }
 
 MainWindow::~MainWindow()

@@ -104,8 +104,12 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     secondRing->setPos(150,150);
 
     rscene->addItem(focus);
+    
+    focus2 = new QGraphicsEllipseItem(0,0,300,300);
+    focus2->setPen(QPen(QColor(0,0,0,0)));
+    rscene->addItem(focus2);
 
-    QGraphicsRectItem *tmp;
+    QGraphicsRectItem *tmp = 0;
 
     for (int i = 0; i < 60 ; ++i){
         if (i % 15 == 0) {

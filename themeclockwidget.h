@@ -49,7 +49,7 @@ private:
     QGraphicsEllipseItem *secondRing;
     //QSvgRenderer *renderer;
     //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
-    QGraphicsEllipseItem *fg, *mg, *bg, *focus;
+    QGraphicsEllipseItem *fg, *mg, *bg, *focus, *focus2;
     int time, maxtime;
     bool roomclock;
     void actRoomclock();
