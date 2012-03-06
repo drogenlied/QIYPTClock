@@ -43,7 +43,10 @@ private:
     QGraphicsScene *rscene;
     QGraphicsRectItem *hourHand;
     QGraphicsRectItem *minuteHand;
-    QGraphicsRectItem *secondHand;
+    //QGraphicsRectItem *secondHand;
+    QGraphicsPolygonItem *secondHand;
+    QGraphicsPolygonItem *secondHandBase;
+    QGraphicsEllipseItem *secondRing;
     //QSvgRenderer *renderer;
     //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
     QGraphicsEllipseItem *fg, *mg, *bg, *focus;

@@ -71,10 +71,37 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     minuteHand->setBrush(QBrush(QColor(0,0,50)));
     minuteHand->setPen(QPen(QColor(0,0,0,0)));
     minuteHand->setPos(150,150);
-    secondHand = new QGraphicsRectItem(-4,-40,8,184);
+
+    QPolygonF tipPolygon;
+    tipPolygon << QPointF(2.5, 97) << QPointF(-2.5, 97) << QPointF(-1.5, 144) << QPointF(1.5, 144) ;
+
+    //secondHand = new QGraphicsRectItem(-4,-40,8,184);
+    secondHand=new QGraphicsPolygonItem(tipPolygon);
     secondHand->setBrush(QBrush(QColor(180,0,0)));
     secondHand->setPen(QPen(QColor(0,0,0,0)));
     secondHand->setPos(150,150);
+
+    QPolygonF basePolygon;
+    basePolygon << QPointF(2.5, 63) << QPointF(-2.5, 63) << QPointF(-4, -40) << QPointF(4, -40);
+
+    secondHandBase=new QGraphicsPolygonItem(basePolygon);
+    secondHandBase->setBrush(QBrush(QColor(180,0,0)));
+    secondHandBase->setPen(QPen(QColor(0,0,0,0)));
+    secondHandBase->setPos(150,150);
+
+    secondRing = new QGraphicsEllipseItem(-12.5,67.5,25,25);//36 durchmesser 10 strich
+    /*
+      spitze: innen: 5
+      außen:3
+      zeiger:außen: 5
+      innen: 8
+      mitte 80 weg
+      */
+    QPen ring = QPen(QColor(180,0,0));
+    ring.setWidthF(10);
+    ring.setCapStyle(Qt::RoundCap);
+    secondRing->setPen(ring);
+    secondRing->setPos(150,150);
 
     rscene->addItem(focus);
 
@@ -101,7 +128,8 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     rscene->addItem(hourHand);
     rscene->addItem(minuteHand);
     rscene->addItem(secondHand);
-
+    rscene->addItem(secondHandBase);
+    rscene->addItem(secondRing);
 
 }
 
@@ -173,6 +201,8 @@ void ThemeClockWidget::actRoomclock(){
         minuteHand->setRotation(180.0 + now.minute()*6.0);
     }
     secondHand->setRotation(180.0 + now.second()*6.0 + 6.0*(0.5-0.5*cos(now.msec()/1000.0*3.14159)));
+    secondHandBase->setRotation(180.0 + now.second()*6.0 + 6.0*(0.5-0.5*cos(now.msec()/1000.0*3.14159)));
+    secondRing->setRotation(180.0 + now.second()*6.0 + 6.0*(0.5-0.5*cos(now.msec()/1000.0*3.14159)));
 
 }
 
