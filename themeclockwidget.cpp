@@ -96,7 +96,7 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
         tmp->setBrush(QBrush(QColor(0,0,50)));
         tmp->setPen(QPen(QColor(0,0,0,0)));
         tmp->setPos(150,150);
-        tmp->setRotation(6*i);
+        tmp->setRotation(6.0*i+0.001);
         rscene->addItem(tmp);
     }
 
@@ -168,7 +168,12 @@ void ThemeClockWidget::actRoomclock(){
     QTime now = QTime::currentTime();
 
     hourHand->setRotation(180.0 + 30.0 * (now.hour() + now.minute()/60.0));
-    minuteHand->setRotation(180.0 + now.minute()*6.0);
+    if(now.second()==59){
+        minuteHand->setRotation(180.0 + now.minute()*6.0 + 6.0*(0.5-0.5*cos(now.msec()/1000.0*3.14159)));
+    }
+    else{
+        minuteHand->setRotation(180.0 + now.minute()*6.0);
+    }
     secondHand->setRotation(180.0 + now.second()*6.0 + 6.0*(0.5-0.5*cos(now.msec()/1000.0*3.14159)));
 
 }
