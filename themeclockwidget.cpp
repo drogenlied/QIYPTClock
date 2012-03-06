@@ -106,8 +106,6 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     ring.setCapStyle(Qt::RoundCap);
     secondRing->setPen(ring);
     secondRing->setPos(150,150);
-
-    rscene->addItem(focus);
     
     focus2 = new QGraphicsEllipseItem(0,0,300,300);
     focus2->setPen(QPen(QColor(0,0,0,0)));
