@@ -63,11 +63,15 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
 
     rscene = new QGraphicsScene();
 
-    hourHand = new QGraphicsRectItem(-7,-25,14,109);
-    hourHand->setBrush(QBrush(QColor(0,0,0)));
+    QPolygonF hourPolygon;
+    hourPolygon << QPointF(-7, -25) << QPointF(-7, 84) << QPointF(0, 91) << QPointF(7, 84) << QPointF(7, -25);
+    hourHand = new QGraphicsPolygonItem(hourPolygon);
+    hourHand->setBrush(QBrush(QColor(0,0,50)));
     hourHand->setPen(QPen(QColor(0,0,0,0)));
     hourHand->setPos(150,150);
-    minuteHand = new QGraphicsRectItem(-6,-38,12,176);
+    QPolygonF minutePolygon;
+    minutePolygon << QPointF(-6, -38) << QPointF(-6, 138) << QPointF(0, 144) << QPointF(6, 138) << QPointF(6, -38);
+    minuteHand = new QGraphicsPolygonItem(minutePolygon);
     minuteHand->setBrush(QBrush(QColor(0,0,50)));
     minuteHand->setPen(QPen(QColor(0,0,0,0)));
     minuteHand->setPos(150,150);

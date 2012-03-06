@@ -41,8 +41,8 @@ public slots:
 private:
     QGraphicsScene *nscene;
     QGraphicsScene *rscene;
-    QGraphicsRectItem *hourHand;
-    QGraphicsRectItem *minuteHand;
+    QGraphicsPolygonItem *hourHand;
+    QGraphicsPolygonItem *minuteHand;
     //QGraphicsRectItem *secondHand;
     QGraphicsPolygonItem *secondHand;
     QGraphicsPolygonItem *secondHandBase;
