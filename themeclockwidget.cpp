@@ -17,6 +17,7 @@
 
 #include "themeclockwidget.h"
 #include <cmath>
+#include <QTime>
 
 ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     QGraphicsView(parent)
@@ -51,47 +52,57 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     focus = new QGraphicsEllipseItem(0,0,300,300);
     focus->setPen(QPen(QColor(0,0,0,0)));
 
+    nscene->addItem(focus);
+    nscene->addItem(bg);
+    nscene->addItem(mg);
+    nscene->addItem(fg);
 
     time = 0;
     maxtime = 1;
     roomclock = false;
 
-/*
-    normal = new QGraphicsSvgItem();
-    nbegin = new QGraphicsSvgItem();
-    nend = new QGraphicsSvgItem();
-    overtime = new QGraphicsSvgItem();
-    obegin = new QGraphicsSvgItem();
-    oend = new QGraphicsSvgItem();
+    rscene = new QGraphicsScene();
 
-    normal->setSharedRenderer(renderer);
-    normal->setElementId(QLatin1String("normal"));
-    normal->setParentItem(bg);
+    hourHand = new QGraphicsRectItem(-7,-25,14,109);
+    hourHand->setBrush(QBrush(QColor(0,0,0)));
+    hourHand->setPen(QPen(QColor(0,0,0,0)));
+    hourHand->setPos(150,150);
+    minuteHand = new QGraphicsRectItem(-6,-38,12,176);
+    minuteHand->setBrush(QBrush(QColor(0,0,50)));
+    minuteHand->setPen(QPen(QColor(0,0,0,0)));
+    minuteHand->setPos(150,150);
+    secondHand = new QGraphicsRectItem(-4,-40,8,184);
+    secondHand->setBrush(QBrush(QColor(180,0,0)));
+    secondHand->setPen(QPen(QColor(0,0,0,0)));
+    secondHand->setPos(150,150);
 
-    nbegin->setSharedRenderer(renderer);
-    nbegin->setElementId(QLatin1String("normal-begin"));
-    nbegin->setParentItem(normal);
+    rscene->addItem(focus);
 
-    nend->setSharedRenderer(renderer);
-    nend->setElementId(QLatin1String("normal-end"));
-    nend->setParentItem(normal);
+    QGraphicsRectItem *tmp;
 
-    overtime->setSharedRenderer(renderer);
-    overtime->setElementId(QLatin1String("overtime"));
-    overtime->setParentItem(fg);
+    for (int i = 0; i < 60 ; ++i){
+        if (i % 15 == 0) {
+            tmp = new QGraphicsRectItem(-6,150,12,-46);
+        }
+        else if (i % 5 == 0) {
+            tmp = new QGraphicsRectItem(-6,150,12,-37);
+        }
+        else {
+            tmp = new QGraphicsRectItem(-2,150,4,-12);
+        }
 
-    obegin->setSharedRenderer(renderer);
-    obegin->setElementId(QLatin1String("overtime-begin"));
-    obegin->setParentItem(overtime);
+        tmp->setBrush(QBrush(QColor(0,0,50)));
+        tmp->setPen(QPen(QColor(0,0,0,0)));
+        tmp->setPos(150,150);
+        tmp->setRotation(6.0*i);
+        rscene->addItem(tmp);
+    }
 
-    oend->setSharedRenderer(renderer);
-    oend->setElementId(QLatin1String("overtime-end"));
-    oend->setParentItem(overtime);
-*/
-    scene()->addItem(focus);
-    scene()->addItem(bg);
-    scene()->addItem(mg);
-    scene()->addItem(fg);
+    rscene->addItem(hourHand);
+    rscene->addItem(minuteHand);
+    rscene->addItem(secondHand);
+
+
 }
 
 ThemeClockWidget::~ThemeClockWidget() {
@@ -120,6 +131,7 @@ void ThemeClockWidget::resizeEvent(QResizeEvent *event){
 }
 
 void ThemeClockWidget::actCake(){
+    setScene(nscene);
     //qDebug("Acting");
     bg->setSpanAngle(-round(((double)time*360*16)/(double)maxtime));
 
@@ -149,10 +161,14 @@ void ThemeClockWidget::actCake(){
 
 
 void ThemeClockWidget::actRoomclock(){
-    bg->setSpanAngle(-300);
-    bg->setBrush(QBrush(QColor(150,150,130)));
-    mg->setSpanAngle(0);
-    fg->setSpanAngle(0);
+    setScene(rscene);
+
+    QTime now = QTime::currentTime();
+
+    hourHand->setRotation(180.0 + 30.0 * (now.hour() + now.minute()/60.0));
+    minuteHand->setRotation(180.0 + now.minute()*6.0);
+    secondHand->setRotation(180.0 + now.second()*6.0 + 6.0*(0.5-0.5*cos(now.msec()/1000.0*3.14159)));
+
 }
 
 void ThemeClockWidget::act(){

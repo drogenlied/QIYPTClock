@@ -40,6 +40,10 @@ public slots:
     void setTime(int ms);
 private:
     QGraphicsScene *nscene;
+    QGraphicsScene *rscene;
+    QGraphicsRectItem *hourHand;
+    QGraphicsRectItem *minuteHand;
+    QGraphicsRectItem *secondHand;
     //QSvgRenderer *renderer;
     //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
     QGraphicsEllipseItem *fg, *mg, *bg, *focus;
