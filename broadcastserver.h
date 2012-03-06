@@ -38,6 +38,7 @@ public slots:
     void updateTime(int);
     void setBroadcastAddress(QHostAddress);
     void setBroadcastPort(unsigned int);
+    void setRoomclock(bool roomclock);
     void setSignature(unsigned int);
 
 private slots:
@@ -48,6 +49,7 @@ private:
     QHostAddress broadcastAddress;
     QString stagename;
     int allowedtime, time;
+    bool roomclock;
     unsigned int port, signature;
 };
 

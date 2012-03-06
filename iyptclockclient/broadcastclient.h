@@ -34,6 +34,7 @@ signals:
     void timeUpdate(int);
     void timeUpdate(QString);
     void stageNameChanged(QString);
+    void roomClockChanged(bool);
 
 public slots:
     void setListeningPort(unsigned int);
@@ -48,6 +49,7 @@ private:
     QString stagename;
     quint32 time;
     quint32 allowedtime;
+    quint32 roomclock;
     quint32 signature;
 };
 

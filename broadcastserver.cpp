@@ -48,6 +48,11 @@ void BroadcastServer::setAllowedTime(int t){
     emit updated();
 }
 
+void BroadcastServer::setRoomclock(bool roomclock){
+    this->roomclock = roomclock;
+    emit updated();
+}
+
 void BroadcastServer::updateTime(int t){
     time = t;
     emit updated();
@@ -73,6 +78,7 @@ void BroadcastServer::broadcast(){
     dgstream << (quint32)signature;
     dgstream << (quint32)allowedtime;
     dgstream << (quint32)time;
+    dgstream << (quint32)(roomclock? 1 : 0);
     dgstream << stagename;
     //qDebug("dgram: %d", datagram.size());
     udpSocket->writeDatagram(datagram.data(), datagram.size(), broadcastAddress, port);
