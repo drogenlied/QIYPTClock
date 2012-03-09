@@ -116,6 +116,7 @@ void MainWindow::createClock(SignalHelper* sh){
         connect(sh, SIGNAL(timeUpdate(QString)), n, SLOT(display(QString)));
         connect(sh, SIGNAL(stageNameChanged(QString)), t, SLOT(setText(QString)));
         connect(sh, SIGNAL(allowedTimeChanged(int)), w,SLOT(setAllowedTime(int)));
+        connect(sh, SIGNAL(roomClockChanged(bool)), w, SLOT(setRoomclock(bool)));
         connect(timer, SIGNAL(timeout()), w, SLOT(act()));
 
         b->addWidget(l);

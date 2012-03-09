@@ -36,7 +36,7 @@ void SocketHelper::setSignalHelper(unsigned int signature, SignalHelper* s){
 }
 
 void SocketHelper::processDatagrams(){
-    quint32 nsignature, nallowedtime, ntime;
+    quint32 nsignature, nallowedtime, ntime, nroomclock;;
     QString nstagename;
 
     while (udpSocket->hasPendingDatagrams()) {
@@ -47,10 +47,11 @@ void SocketHelper::processDatagrams(){
         dgstream >> nsignature;
         dgstream >> nallowedtime;
         dgstream >> ntime;
+        dgstream >> nroomclock;
         dgstream >> nstagename;
 
         if (sigmap.contains(nsignature)){
-            sigmap[nsignature]->fireSignal(ntime, nallowedtime, nstagename);
+            sigmap[nsignature]->fireSignal(ntime, nallowedtime, nroomclock, nstagename);
         }
     }
     //qDebug("process Datagram: %d ", nsignature);
