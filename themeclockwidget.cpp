@@ -160,6 +160,8 @@ ThemeClockWidget::~ThemeClockWidget() {
 }
 
 void ThemeClockWidget::resizeEvent(QResizeEvent *event){
+    Q_UNUSED(event);
+
     this->fitInView(focus, Qt::KeepAspectRatio);
     this->centerOn(focus);
 }
