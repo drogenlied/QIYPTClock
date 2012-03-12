@@ -41,17 +41,17 @@ public slots:
 private:
     QGraphicsScene *nscene;
     QGraphicsScene *rscene;
+
     QGraphicsPolygonItem *hourHand;
     QGraphicsPolygonItem *minuteHand;
-    //QGraphicsRectItem *secondHand;
     QGraphicsPolygonItem *secondHand;
     QGraphicsPolygonItem *secondHandBase;
     QGraphicsEllipseItem *secondRing;
-    //QSvgRenderer *renderer;
-    //QGraphicsSvgItem *normal, *nbegin, *nend, *overtime, *obegin, *oend;
+
     QGraphicsEllipseItem *fg, *mg, *bg, *focus, *focus2;
     int time, maxtime;
     bool roomclock;
+
     void actRoomclock();
     void actCake();
     bool isRoomclock();

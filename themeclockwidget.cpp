@@ -63,26 +63,30 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
 
     rscene = new QGraphicsScene();
 
+    QPen handPen;
+    handPen.setColor(QColor(127, 160, 72, 100));
+    handPen.setWidth(0);
+
     QPolygonF hourPolygon;
     hourPolygon << QPointF(-7, -25) << QPointF(-7, 84) << QPointF(0, 91) << QPointF(7, 84) << QPointF(7, -25);
     hourHand = new QGraphicsPolygonItem(hourPolygon);
+    hourHand->setPen(handPen);
     hourHand->setBrush(QBrush(QColor(0,0,50)));
-    hourHand->setPen(QPen(QColor(0,0,0,0)));
     hourHand->setPos(150,150);
+
     QPolygonF minutePolygon;
     minutePolygon << QPointF(-6, -38) << QPointF(-6, 138) << QPointF(0, 144) << QPointF(6, 138) << QPointF(6, -38);
     minuteHand = new QGraphicsPolygonItem(minutePolygon);
+    minuteHand->setPen(handPen);
     minuteHand->setBrush(QBrush(QColor(0,0,50)));
-    minuteHand->setPen(QPen(QColor(0,0,0,0)));
     minuteHand->setPos(150,150);
 
     QPolygonF tipPolygon;
     tipPolygon << QPointF(2.5, 97) << QPointF(-2.5, 97) << QPointF(-1.5, 144) << QPointF(1.5, 144) ;
 
-    //secondHand = new QGraphicsRectItem(-4,-40,8,184);
     secondHand=new QGraphicsPolygonItem(tipPolygon);
-    secondHand->setBrush(QBrush(QColor(180,0,0)));
     secondHand->setPen(QPen(QColor(0,0,0,0)));
+    secondHand->setBrush(QBrush(QColor(180,0,0)));
     secondHand->setPos(150,150);
 
     QPolygonF basePolygon;
