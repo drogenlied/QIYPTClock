@@ -145,22 +145,9 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
 
 ThemeClockWidget::~ThemeClockWidget() {
     delete nscene;
+    delete rscene;
 
-    /*delete normal;
-    delete nbegin;
-    delete nend;
-    delete overtime;
-    delete obegin;
-    delete oend;
-
-    delete renderer;
-    */
-
-    delete focus;
-    delete bg;
-    delete mg;
-    delete fg;
-    qDebug("ThemeClockWidget died");
+    //qDebug("ThemeClockWidget died");
 }
 
 void ThemeClockWidget::resizeEvent(QResizeEvent *event){
