@@ -72,43 +72,49 @@ void MainWindow::createClock(SignalHelper* sh){
     //qDebug("New clock: %s\n", sh->getTitle().toStdString().c_str());
 
     if (airportMode){
-        QHBoxLayout *b = new QHBoxLayout();
 
         QLabel *l = new QLabel(sh->getTitle());
         QFont f = l->font();
         f.setBold(true);
         f.setPointSize(15);
         l->setFont(f);
-        QLabel *t = new QLabel("Fight has not begun yet.");
-        f = t->font();
+
+        QProgressBar *pr = new QProgressBar();
+        f = pr->font();
         f.setPointSize(12);
-        t->setFont(f);
+        pr->setFont(f);
+        pr->setFormat("Fight has not begun yet. %p%");
+        formatSetter *fs = new formatSetter(pr);
+
         QLCDNumber *n = new QLCDNumber(5);
         n->setSegmentStyle(QLCDNumber::Flat);
 
-        //connect(sh, SIGNAL(timeUpdate(int)), w, SLOT(setTime(int)));
+        connect(sh, SIGNAL(timeUpdate(int)), pr, SLOT(setValue(int)));
         connect(sh, SIGNAL(timeUpdate(QString)), n, SLOT(display(QString)));
-        connect(sh, SIGNAL(stageNameChanged(QString)), t, SLOT(setText(QString)));
-        //connect(sh, SIGNAL(allowedTimeChanged(int)), w,SLOT(setAllowedTime(int)));
-        //connect(timer, SIGNAL(timeout()), w, SLOT(act()));
+        connect(sh, SIGNAL(stageNameChanged(QString)), fs, SLOT(setFormat(QString)));
+        connect(sh, SIGNAL(allowedTimeChanged(int)), pr,SLOT(setMaximum(int)));
 
-        b->addWidget(l);
-        b->addWidget(t);
-        b->addWidget(n);
-        grid->addLayout(b, elementNr, 0, 1, 1);
+        grid->addWidget(l, elementNr, 0, 1, 1);
+        grid->addWidget(pr,elementNr, 1, 1, 1);
+        grid->addWidget(n, elementNr, 2, 1, 1);
+
     } else {
+
         QVBoxLayout *b = new QVBoxLayout();
         ThemeClockWidget *w = new ThemeClockWidget();
         w->setRenderHint(QPainter::Antialiasing);
+
         QLabel *l = new QLabel(sh->getTitle());
         QFont f = l->font();
         f.setBold(true);
         f.setPointSize(15);
         l->setFont(f);
+
         QLabel *t = new QLabel("Fight has not begun yet.");
         f = t->font();
         f.setPointSize(12);
         t->setFont(f);
+
         QLCDNumber *n = new QLCDNumber(5);
         n->setSegmentStyle(QLCDNumber::Flat);
 
@@ -126,4 +132,12 @@ void MainWindow::createClock(SignalHelper* sh){
         grid->addLayout(b, elementNr /4, elementNr%4, 1, 1);
     }
     elementNr++;
+}
+
+formatSetter::formatSetter(QProgressBar *bar){
+    b = bar;
+}
+
+void formatSetter::setFormat(QString format){
+    b->setFormat(format);
 }
