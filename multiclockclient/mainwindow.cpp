@@ -22,11 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
         //TCLAP::ValueArg<unsigned int> portArg("p", "port","Port to listen on", false, 54545, "unsigned integer");
         //TCLAP::ValueArg<unsigned int> sigArg("s", "signature","Signature to use", false, 123456 , "unsigned integer");
         //TCLAP::ValueArg<std::string> bcastArg("b", "broadcast","Broadcast address to send packets to", false, "255.255.255.255", "ip address");
-        TCLAP::SwitchArg airport("a", "airport", "Airport-like interface");
+        TCLAP::SwitchArg airport("a", "noairport", "Do not use airport-like interface");
 
         cmd.add( airport );
         cmd.parse( QApplication::argc(), QApplication::argv() );
-        airportMode = airport.getValue();
+        airportMode = !airport.getValue();
 
     } catch (TCLAP::ArgException &e) {
         std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
