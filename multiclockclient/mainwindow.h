@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
+#include <QProgressBar>
 #include <QTimer>
 #include "signalhelper.h"
 #include "multibroadcastclient.h"
@@ -29,6 +30,20 @@ private:
     int elementNr;
     QTimer *timer;
     bool airportMode;
+};
+
+class formatSetter : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit formatSetter(QProgressBar *bar);
+
+public slots:
+    void setFormat(QString format);
+
+private:
+    QProgressBar *b;
 };
 
 #endif // MAINWINDOW_H

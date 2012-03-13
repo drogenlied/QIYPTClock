@@ -10,7 +10,7 @@ class SignalHelper : public QObject
 public:
     explicit SignalHelper( QString title = QString("No Title set"), QObject *parent = 0);
     ~SignalHelper();
-    void fireSignal(quint32 time, quint32 allowedTime, QString stageName);
+    void fireSignal(quint32 time, quint32 allowedTime, quint32 roomclock, QString stageName);
     QString getTitle();
     QString toString();
 
@@ -19,6 +19,7 @@ signals:
     void timeUpdate(int);
     void timeUpdate(QString);
     void stageNameChanged(QString);
+    void roomClockChanged(bool);
 
 public slots:
 
@@ -27,6 +28,7 @@ private:
     QString stageName;
     quint32 time;
     quint32 allowedTime;
+    quint32 roomclock;
 
 };
 

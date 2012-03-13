@@ -51,7 +51,7 @@ public slots:
 
 private:
     StageListModel* stlm;
-    unsigned int currentIndex;
+    int currentIndex;
 };
 
 #endif // LISTCONTROLLER_H

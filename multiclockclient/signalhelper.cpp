@@ -15,7 +15,7 @@ SignalHelper::~SignalHelper(){
     qDebug("SignalHelper died");
 }
 
-void SignalHelper::fireSignal(quint32 ntime, quint32 nallowedTime, QString nstageName){
+void SignalHelper::fireSignal(quint32 ntime, quint32 nallowedTime, quint32 nroomclock, QString nstageName){
     if (time != ntime){
         time = ntime;
         emit timeUpdate(time);
@@ -24,6 +24,10 @@ void SignalHelper::fireSignal(quint32 ntime, quint32 nallowedTime, QString nstag
     if (allowedTime != nallowedTime){
         allowedTime = nallowedTime;
         emit allowedTimeChanged(allowedTime);
+    }
+    if (roomclock != nroomclock){
+        roomclock = nroomclock;
+        emit roomClockChanged(roomclock > 0);
     }
     if (nstageName != stageName){
         stageName = nstageName;
