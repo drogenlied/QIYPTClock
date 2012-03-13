@@ -1,7 +1,7 @@
 /****************************************************************************
 **
-** Copyright (C) 2011 Jan M. Binder
-** Contact: jan.binder@sfz-bw.de
+** Copyright (C) 2011-2012 Jan M. Binder, Simeon Voelkel
+** Contact: jan.binder@sfz-bw.de, simeon.voelkel@sfz-bw.de
 **
 ** $QT_BEGIN_LICENSE:GPL$
 ** GNU General Public License Usage
