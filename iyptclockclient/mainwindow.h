@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2011 Jan M. Binder
+** Copyright (C) 2011-2012 Jan M. Binder
 ** Contact: jan.binder@sfz-bw.de
 **
 ** $QT_BEGIN_LICENSE:GPL$
