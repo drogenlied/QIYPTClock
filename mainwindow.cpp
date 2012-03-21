@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ffwd, SIGNAL(clicked()), lc, SLOT(forward()));
     connect(ui->bwd, SIGNAL(clicked()), lc, SLOT(backward()));
     connect(ui->addButton, SIGNAL(clicked()), lc, SLOT(add()));
+    connect(thc, SIGNAL(started(int)), lc, SLOT(checkAutoStart()));
     connect(this, SIGNAL(itemShouldBeDeleted(QModelIndex)), lc, SLOT(del(QModelIndex)));
     connect(lc, SIGNAL(allowedTimeChanged(int)), thc, SLOT(setAllowedTime(int)));
     connect(lc, SIGNAL(roomClockChanged(bool)), ui->graphicsView, SLOT(setRoomclock(bool)));

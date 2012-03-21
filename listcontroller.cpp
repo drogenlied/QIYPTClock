@@ -39,6 +39,7 @@ void ListController::forward(){
         stlm->setHighlightedRow(currentIndex);
         Stage st = stlm->getList().value(currentIndex);
         if (!stlm->getList().value(currentIndex-1).carry) emit resetTime();
+        if (st.roomclock) emit endOfStage();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
@@ -55,6 +56,7 @@ void ListController::backward(){
         stlm->setHighlightedRow(currentIndex);
         Stage st = stlm->getList().value(currentIndex);
         if (!st.carry) emit resetTime();
+        if (st.roomclock) emit endOfStage();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
@@ -157,5 +159,14 @@ void ListController::setCurrentIndex(int currentIndex){
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
+    }
+}
+
+void ListController::checkAutoStart(){
+    if(currentIndex >= 0 && currentIndex <= stlm->rowCount()-1){
+        Stage st = stlm->getList().value(currentIndex);
+        if(st.roomclock){
+            forward();
+        }
     }
 }

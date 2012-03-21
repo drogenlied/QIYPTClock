@@ -49,6 +49,7 @@ public slots:
     void backward();
     void add();
     void del(QModelIndex ind);
+    void checkAutoStart();
 
 private:
     StageListModel* stlm;
