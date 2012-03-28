@@ -21,6 +21,7 @@ HEADERS += mainwindow.h \
     stagelistmodel.h \
     qresizablelabel.h \
     autosave.h
-FORMS += mainwindow.ui
+FORMS += mainwindow.ui \
+    aboutdialog.ui
 INCLUDEPATH += /opt/local/include/
 include(themeclockwidget.pri)
