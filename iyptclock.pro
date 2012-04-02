@@ -13,14 +13,16 @@ SOURCES += main.cpp \
     broadcastserver.cpp \
     stagelistmodel.cpp \
     qresizablelabel.cpp \
-    autosave.cpp
+    autosave.cpp \
+    aboutdialog.cpp
 HEADERS += mainwindow.h \
     themeclock.h \
     listcontroller.h \
     broadcastserver.h \
     stagelistmodel.h \
     qresizablelabel.h \
-    autosave.h
+    autosave.h \
+    aboutdialog.h
 FORMS += mainwindow.ui \
     aboutdialog.ui
 INCLUDEPATH += /opt/local/include/

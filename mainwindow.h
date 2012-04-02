@@ -21,11 +21,13 @@
 
 #include <QMainWindow>
 #include <QAbstractTableModel>
-#include "themeclock.h"
-#include "listcontroller.h"
-#include "broadcastserver.h"
-#include "autosave.h"
 #include <QtCore/QTimer>
+#include "aboutdialog.h"
+#include "autosave.h"
+#include "broadcastserver.h"
+#include "listcontroller.h"
+#include "themeclock.h"
+
 
 namespace Ui {
     class MainWindow;
@@ -58,6 +60,7 @@ protected:
 friend class AutoSave;
 private:
     Ui::MainWindow *ui;
+    AboutDialog *ad;
     QTimer *timer, *timer2, *timer3;
     ThemeClock *thc;
     ListController *lc;

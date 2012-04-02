@@ -56,6 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->delButton, SIGNAL(clicked()), this, SLOT(triggerDel()));
     connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveStages()));
 
+    ad = new AboutDialog();
+
+    connect(ui->actionAbout_IYPTClock, SIGNAL(triggered()), ad, SLOT(exec()));
+
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), ui->graphicsView, SLOT(act()));
     timer->start(30);
@@ -134,6 +138,7 @@ MainWindow::~MainWindow()
     delete bs;
     delete lc;
     delete thc;
+    delete ad;
     delete ui;
 }
 
@@ -190,3 +195,4 @@ void MainWindow::propagateModel(QAbstractTableModel* mdl){
     ui->stagelist->setModel(mdl);
     ui->tableView->setModel(mdl);
 }
+
