@@ -14,8 +14,8 @@
    <string>IYPT Clock Control Center</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>uhrlogo-64x64.png</normaloff>uhrlogo-64x64.png</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/img/iclocklogo.svg</normaloff>:/img/iclocklogo.svg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -418,7 +418,9 @@
    <header>themeclockwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_Quit</sender>
