@@ -27,3 +27,7 @@ FORMS += mainwindow.ui \
     aboutdialog.ui
 INCLUDEPATH += /opt/local/include/
 include(themeclockwidget.pri)
+
+OTHER_FILES += \
+    uhrlogo-64x64.png \
+    iclocklogo.svg
