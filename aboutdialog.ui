@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>About IYPTClock</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>uhrlogo-64x64.png</normaloff>uhrlogo-64x64.png</iconset>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>

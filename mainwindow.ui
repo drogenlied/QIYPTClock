@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>IYPT Clock Control Center</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>uhrlogo-64x64.png</normaloff>uhrlogo-64x64.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
