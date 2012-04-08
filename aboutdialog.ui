@@ -47,7 +47,10 @@
          <number>0</number>
         </property>
         <property name="text">
-         <string>Icon</string>
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>uhrlogo-64x64.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
