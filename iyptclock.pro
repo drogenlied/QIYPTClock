@@ -29,5 +29,8 @@ INCLUDEPATH += /opt/local/include/
 include(themeclockwidget.pri)
 
 OTHER_FILES += \
-    uhrlogo-64x64.png \
-    iclocklogo.svg
+    iclocklogo.svg \
+    iclocklogo-64x64.png
+
+RESOURCES += \
+    resources.qrc
