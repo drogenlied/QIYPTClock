@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>959</width>
-    <height>556</height>
+    <width>957</width>
+    <height>554</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -361,19 +361,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>959</width>
+     <width>957</width>
      <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMain">
     <property name="title">
-     <string>Main</string>
+     <string>&amp;Main</string>
     </property>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout_IYPTClock"/>
    </widget>
@@ -400,6 +400,9 @@
   <action name="actionAbout_IYPTClock">
    <property name="text">
     <string>About IYPTClock</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>
