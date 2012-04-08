@@ -24,3 +24,6 @@ FORMS    += mainwindow.ui
 OTHER_FILES +=
 
 INCLUDEPATH += ..
+
+RESOURCES += \
+    ../resources.qrc
