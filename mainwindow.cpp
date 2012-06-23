@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->startstop, SIGNAL(clicked()), thc, SLOT(startorpause()));
     connect(ui->resetButton, SIGNAL(clicked()), thc, SLOT(reset()));
     connect(ui->setTimeButton, SIGNAL(clicked()), this, SLOT(setTime()));
+    ui->setTimeComboBox->addItem(tr("last saved time"), QVariant(TIME_SAVED));
     ui->setTimeComboBox->addItem(tr("elapsed time"), QVariant(TIME_ELAPSED));
     ui->setTimeComboBox->addItem(tr("remaining time"), QVariant(TIME_LEFT));
 
@@ -129,6 +130,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer2 = new QTimer();
     connect(timer2, SIGNAL(timeout()), this, SLOT(toggleStartPause()));
+    connect(timer2, SIGNAL(timeout()), this, SLOT(toggleTimeSpinBox()));
     timer2->start(100);
 
     savefile = QString("/var/run/iyptclock/autosave_");
@@ -184,12 +186,24 @@ void MainWindow::toggleStartPause(){
     }
 }
 
+void MainWindow::toggleTimeSpinBox(){
+    if (ui->setTimeComboBox->itemData(ui->setTimeComboBox->currentIndex()).toInt() == TIME_SAVED){
+      ui->setTimeSpinBox->setEnabled(false);
+      ui->setTimeSpinBox->setValue(as->getLastSavedTime()/1000);
+    }else{
+      ui->setTimeSpinBox->setEnabled(true);
+    }
+}
+
 void MainWindow::saveStages(){
     lc->saveListToFile("stages.txt");
 }
 
 void MainWindow::setTime(){
     switch (ui->setTimeComboBox->itemData(ui->setTimeComboBox->currentIndex()).toInt()) {
+    case TIME_SAVED:
+            thc->setElapsedTime(as->getLastSavedTime());
+            break;
     case TIME_ELAPSED:
             thc->setElapsedTime(ui->setTimeSpinBox->value()*1000);
             break;

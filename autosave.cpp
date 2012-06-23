@@ -28,6 +28,7 @@ AutoSave::AutoSave(MainWindow *mw, QString dest, QObject *parent) :
 {
     this->mw = mw;
     this->dest = dest;
+    this->lastsavedtime = 0;
 }
 void AutoSave::writeToDisk(int step, int time)
 {
@@ -45,6 +46,9 @@ void AutoSave::save()
 {
     int current = mw->lc->getCurrentIndex();
     int time = mw->thc->getElapsedTime();
+    if ( time/1000 > 15 ){ // only save times larger than 20s (this allows to revert a double-skip)
+        lastsavedtime = mw->thc->getElapsedTime();
+    }
     QtConcurrent::run(this, &AutoSave::writeToDisk, current, time);
 }
 
@@ -79,3 +83,10 @@ void AutoSave::load()
         mw->thc->setElapsedTime(time);
     }
 }
+
+int AutoSave::getLastSavedTime()
+{
+  return lastsavedtime;
+}
+
+

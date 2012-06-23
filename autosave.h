@@ -28,6 +28,7 @@ class AutoSave : public QObject
 public:
     explicit AutoSave(MainWindow *mw, QString dest, QObject *parent = 0);
     void load();
+    int getLastSavedTime();
     
 signals:
     
@@ -37,6 +38,7 @@ public slots:
 private:
     MainWindow *mw;
     QString dest;
+    int lastsavedtime;
     void writeToDisk(int step, int time);
 };
 

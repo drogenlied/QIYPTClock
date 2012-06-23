@@ -45,6 +45,7 @@ public slots:
     void triggerPort();
     void triggerDel();
     void toggleStartPause();
+    void toggleTimeSpinBox();
     void saveStages();
     void setTime();
     void propagateModel(QAbstractTableModel*);
@@ -68,6 +69,7 @@ private:
     QString savefile;
     AutoSave *as;
     enum {
+        TIME_SAVED,
         TIME_ELAPSED,
         TIME_LEFT
     };
