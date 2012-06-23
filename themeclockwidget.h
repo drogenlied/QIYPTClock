@@ -49,7 +49,7 @@ private:
     QGraphicsPolygonItem *secondHandBase;
     QGraphicsEllipseItem *secondRing;
 
-    QGraphicsEllipseItem *fg, *mg, *bg, *focus, *focus2;
+    QGraphicsEllipseItem *fg, *mg, *bg, *ring, *focus, *focus2;
     int time, maxtime;
     bool roomclock;
 

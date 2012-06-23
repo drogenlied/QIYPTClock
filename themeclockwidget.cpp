@@ -50,10 +50,15 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
     bg->setBrush(QBrush(QColor(50,200,30)));
     bg->setPen(QPen(QColor(0,0,0,0)));
 
+    ring = new QGraphicsEllipseItem(0,0,300,300);
+    ring->setPen(QPen(QColor(0,0,0,255)));
+    ring->setBrush(QBrush(QColor(255,255,255)));
+
     focus = new QGraphicsEllipseItem(0,0,300,300);
     focus->setPen(QPen(QColor(0,0,0,0)));
 
     nscene->addItem(focus);
+    nscene->addItem(ring);
     nscene->addItem(bg);
     nscene->addItem(mg);
     nscene->addItem(fg);
