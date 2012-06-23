@@ -168,7 +168,7 @@ void ThemeClockWidget::actCake(){
     //qDebug("Acting");
     bg->setSpanAngle(-round(((double)time*360*16)/(double)maxtime));
 
-    if(time < maxtime/6*5) // over 5/6 of time left
+    if(time < maxtime/4*3) // over 3/4 of time left
     {
         bg->setBrush(QBrush(QColor(50,200,30)));
     }
