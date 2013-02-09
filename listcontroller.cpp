@@ -124,7 +124,11 @@ int ListController::saveListToFile(QString path){
 
     QTextStream out(&file);
     for(QList<Stage>::iterator t = tmplist.begin(); t != tmplist.end(); t++){
-        out << tmpt.msecsTo(t->duration) << "\t" << t->name << "\t" << (unsigned int)(t->carry ? 1 : 0) << "\t" << (unsigned int)(t->roomclock ? 1 : 0) << "\n";
+        out << tmpt.msecsTo(t->duration);
+        out << "\t" << t->name;
+        out << "\t" << (unsigned int)(t->carry ? 1 : 0);
+        out << "\t" << (unsigned int)(t->roomclock ? 1 : 0);
+        out << "\n";
     }
     file.close();
     return 0;
