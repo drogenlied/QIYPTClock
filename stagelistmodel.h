@@ -28,11 +28,15 @@
 class Stage {
 public:
     Stage();
-    Stage(QTime duration, QString name, bool carry = false, bool roomclock = false);
+    Stage(QTime duration, QTime overtime, QString name, bool autoadvance = false,
+          bool carry = false, bool ocarry = false, bool roomclock = false);
 
     QTime duration;
+    QTime overtime;
     QString name;
+    bool autoadvance;
     bool carry;
+    bool ocarry;
     bool roomclock;
 };
 

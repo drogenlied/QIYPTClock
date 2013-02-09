@@ -79,24 +79,31 @@ int ListController::loadListFromFile(QString path){
         QTime tmpt = QTime(0,0,0);
         QString line = in.readLine();
         QStringList sl = line.split(QChar('\t'));
-        if(sl.size() == 2){
+        if(sl.size() == 3){
             tmplist.append( Stage(
                                 tmpt.addMSecs(sl.value(0).toInt()),
-                                sl.value(1))
+                                tmpt.addMSecs(sl.value(1).toInt()),
+                                sl.value(2))
                             );
-        }else if(sl.size() == 3){
+        }else if(sl.size() == 4){
             tmplist.append( Stage(
                                 tmpt.addMSecs(sl.value(0).toInt()),
-                                sl.value(1),
-                                (sl.value(2).toUInt() > 0 ? true : false)
+                                tmpt.addMSecs(sl.value(1).toInt()),
+                                sl.value(2),
+                                (sl.value(3).toUInt() > 0 ? true : false)
                                 ) );
-        }else if(sl.size() >= 3){
-        tmplist.append( Stage(
+        }else if(sl.size() >= 7){
+            tmplist.append( Stage(
                             tmpt.addMSecs(sl.value(0).toInt()),
-                            sl.value(1),
-                            (sl.value(2).toUInt() > 0 ? true : false),
-                            (sl.value(3).toUInt() > 0 ? true : false)
+                            tmpt.addMSecs(sl.value(1).toInt()),
+                            sl.value(2),
+                            (sl.value(3).toUInt() > 0 ? true : false),
+                            (sl.value(4).toUInt() > 0 ? true : false),
+                            (sl.value(5).toUInt() > 0 ? true : false),
+                            (sl.value(6).toUInt() > 0 ? true : false)
                             ) );
+        }else{
+            // We read a comment line
         }
     }
     oldstlm = stlm;
@@ -124,7 +131,10 @@ int ListController::saveListToFile(QString path){
 
     QTextStream out(&file);
     for(QList<Stage>::iterator t = tmplist.begin(); t != tmplist.end(); t++){
-        out << tmpt.msecsTo(t->duration) << "\t" << t->name << "\t" << (unsigned int)(t->carry ? 1 : 0) << "\t" << (unsigned int)(t->roomclock ? 1 : 0) << "\n";
+        out << tmpt.msecsTo(t->duration) << "\t" << tmpt.msecsTo(t->overtime) << "\t"
+            << t->name << "\t" << (unsigned int)(t->autoadvance ? 1 : 0) << "\t"
+            << (unsigned int)(t->carry ? 1 : 0) << "\t" << (unsigned int)(t->ocarry ? 1 : 0) << "\t"
+            << (unsigned int)(t->roomclock ? 1 : 0) << "\n";
     }
     file.close();
     return 0;

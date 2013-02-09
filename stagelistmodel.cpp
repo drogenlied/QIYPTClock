@@ -23,10 +23,13 @@ Stage::Stage(){
 
 }
 
-Stage::Stage(QTime d, QString n, bool c, bool r){
+Stage::Stage(QTime d, QTime o, QString n, bool a, bool c, bool oc, bool r){
     duration = d;
+    overtime = o;
     name = n;
+    autoadvance = a;
     carry = c;
+    ocarry = oc;
     roomclock = r;
 }
 
@@ -67,10 +70,16 @@ QVariant StageListModel::data(const QModelIndex &index, int role) const {
         if (index.column() == 0)
             return stage.duration.toString("mm:ss");
         else if (index.column() == 1)
-            return stage.name;
+            return stage.overtime.toString("mm:ss");
         else if (index.column() == 2)
-            return stage.carry;
+            return stage.name;
         else if (index.column() == 3)
+            return stage.carry;
+        else if (index.column() == 4)
+            return stage.carry;
+        else if (index.column() == 5)
+            return stage.ocarry;
+        else if (index.column() == 6)
             return stage.roomclock;
     }
     if (role == Qt::BackgroundRole) {
@@ -88,11 +97,17 @@ QVariant StageListModel::headerData(int section, Qt::Orientation orientation, in
         switch (section) {
             case 0:
                 return tr("Duration");
-             case 1:
+            case 1:
+                return tr("Overtime");
+            case 2:
                 return tr("Stage Description");
-             case 2:
+            case 3:
+                return tr("Autoadvance");
+            case 4:
                 return tr("Carry Time");
-             case 3:
+            case 5:
+                return tr("Carry Overtime");
+            case 6:
                 return tr("Room Clock");
              default:
                 return QVariant();
@@ -106,7 +121,7 @@ bool StageListModel::insertRows(int position, int rows, const QModelIndex &index
     beginInsertRows(QModelIndex(), position, position+rows-1);
 
     for (int row=0; row < rows; row++) {
-        Stage stage(QTime(0,0,1), " ");
+        Stage stage(QTime(0,0,1), QTime(0,0,0), " ");
         listOfStages.insert(position, stage);
     }
 
@@ -133,10 +148,16 @@ bool StageListModel::setData(const QModelIndex &index, const QVariant &value, in
         if (index.column() == 0)
             p.duration = QTime::fromString(value.toString(), "mm:ss");
         else if (index.column() == 1)
-            p.name = value.toString();
+            p.overtime = QTime::fromString(value.toString(), "mm:ss");
         else if (index.column() == 2)
-            p.carry = value.toBool();
+            p.name = value.toString();
         else if (index.column() == 3)
+            p.autoadvance = value.toBool();
+        else if (index.column() == 4)
+            p.carry = value.toBool();
+        else if (index.column() == 5)
+            p.ocarry = value.toBool();
+        else if (index.column() == 6)
             p.roomclock = value.toBool();
         else
             return false;
