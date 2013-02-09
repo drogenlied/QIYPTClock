@@ -111,10 +111,10 @@ ThemeClockWidget::ThemeClockWidget(QWidget *parent) :
       innen: 8
       mitte 80 weg
       */
-    QPen ring = QPen(QColor(180,0,0));
-    ring.setWidthF(10);
-    ring.setCapStyle(Qt::RoundCap);
-    secondRing->setPen(ring);
+    QPen ringPen = QPen(QColor(180,0,0));
+    ringPen.setWidthF(10);
+    ringPen.setCapStyle(Qt::RoundCap);
+    secondRing->setPen(ringPen);
     secondRing->setPos(150,150);
     
     focus2 = new QGraphicsEllipseItem(0,0,300,300);
