@@ -34,6 +34,7 @@ public:
 
 signals:
     void allowedTimeChanged(int);
+    void overtimed(int);
     void timeUpdate(int);
     void timeUpdate(QString);
     void started(int);
@@ -46,6 +47,7 @@ public slots:
     void stop();
     void reset();
     void setAllowedTime(int ms);
+    void setOverTime(int ms);
     void setElapsedTime(int ms);
     void setRemainingTime(int ms);
     void pulse();
@@ -54,6 +56,7 @@ private:
     QTime *t;
     QTimer *renew;
     int maxtime;
+    int overtime;
     int savedtime;
     bool running;
 };

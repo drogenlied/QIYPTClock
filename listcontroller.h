@@ -38,6 +38,8 @@ public:
 
 signals:
     void allowedTimeChanged(int);
+    void elapsedTimeChanged(int);
+    void overTimeChanged(int);
     void resetTime();
     void stageNameChanged(QString);
     void modelChanged(QAbstractTableModel*);
@@ -47,6 +49,7 @@ signals:
 public slots:
     void forward();
     void backward();
+    void handleOvertime(int);
     void add();
     void del(QModelIndex ind);
     void checkAutoStart();

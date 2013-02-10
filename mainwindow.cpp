@@ -114,6 +114,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(newPort(uint)), bs, SLOT(setBroadcastPort(uint)));
     connect(this, SIGNAL(newID(uint)), bs, SLOT(setSignature(uint)));
 
+    connect(lc, SIGNAL(overTimeChanged(int)), thc, SLOT(setOverTime(int)));
+    connect(thc, SIGNAL(overtimed(int)), lc, SLOT(handleOvertime(int)));
+    connect(lc, SIGNAL(elapsedTimeChanged(int)), thc, SLOT(setElapsedTime(int)));
+    connect(lc, SIGNAL(elapsedTimeChanged(int)), ui->graphicsView, SLOT(setTime(int)));
+    connect(lc, SIGNAL(elapsedTimeChanged(int)), bs, SLOT(updateTime(int)));
+
     if (noconfig)
       {
         ui->tabWidget->setTabEnabled(1,false);

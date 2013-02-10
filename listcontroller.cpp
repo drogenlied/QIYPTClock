@@ -41,6 +41,7 @@ void ListController::forward(){
         if (!stlm->getList().value(currentIndex-1).carry) emit resetTime();
         if (st.roomclock) emit endOfStage();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit overTimeChanged(tmpt.msecsTo(st.overtime));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
     } else if (currentIndex >= stlm->rowCount()-1){
@@ -58,11 +59,23 @@ void ListController::backward(){
         if (!st.carry) emit resetTime();
         if (st.roomclock) emit endOfStage();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit overTimeChanged(tmpt.msecsTo(st.overtime));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
     } else if (currentIndex <= 0){
         emit endOfStage();
         currentIndex = 0;
+    }
+}
+
+void ListController::handleOvertime(int over){
+    Stage st = stlm->getList().value(currentIndex);
+    if (!st.autoadvance)
+        return;
+
+    forward();
+    if (!st.carry && st.ocarry){
+        emit elapsedTimeChanged(over);
     }
 }
 
@@ -116,6 +129,7 @@ int ListController::loadListFromFile(QString path){
     if(currentIndex < stlm->rowCount()-1){
         Stage st = stlm->getList().value(currentIndex);
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit overTimeChanged(tmpt.msecsTo(st.overtime));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
     }
@@ -171,6 +185,7 @@ void ListController::setCurrentIndex(int currentIndex){
         stlm->setHighlightedRow(currentIndex);
         Stage st = stlm->getList().value(currentIndex);
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
+        emit overTimeChanged(tmpt.msecsTo(st.overtime));
         emit stageNameChanged(st.name);
         emit roomClockChanged(st.roomclock);
     }

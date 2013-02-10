@@ -61,6 +61,14 @@ void ThemeClock::setElapsedTime(int ms){
     }
 }
 
+void ThemeClock::setOverTime(int ms){
+    if (ms >= 0)
+    {
+        overtime = ms;
+    }
+
+}
+
 void ThemeClock::setRemainingTime(int ms){
     if (ms > 0 && ms <= maxtime)
     {
@@ -94,9 +102,12 @@ void ThemeClock::setAllowedTime(int ms){
 }
 
 void ThemeClock::pulse(){
-    if(running) {
+    if (running) {
         emit timeUpdate(t->elapsed());
         emit timeUpdate(this->toString());
+
+        if (t->elapsed() >= maxtime + overtime)
+            emit overtimed(overtime);
     }
 }
 
