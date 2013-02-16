@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     BroadcastClient *bc = new BroadcastClient(this, port, sig);
 
     connect(bc, SIGNAL(timeUpdate(int)), ui->graphicsView, SLOT(setTime(int)));
+    connect(bc, SIGNAL(timeUpdate(int)), this, SLOT(setLcdWidthForTime(int)));
     connect(bc, SIGNAL(roomClockChanged(bool)), ui->graphicsView, SLOT(setRoomclock(bool)));
     connect(bc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
     connect(bc, SIGNAL(timeUpdate(QString)), ui->lcdNumber, SLOT(display(QString)));
@@ -68,6 +69,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setLcdWidthForTime(int time){
+    if (time < 0) return;
+    else if (time < 600000) ui->lcdNumber->setDigitCount(4);
+    else if (time < 3600000) ui->lcdNumber->setDigitCount(5);
+    else if (time < 36000000) ui->lcdNumber->setDigitCount(7);
+    else ui->lcdNumber->setDigitCount(8);
 }
 
 //void MainWindow::triggerId(){

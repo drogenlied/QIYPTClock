@@ -49,6 +49,7 @@ public slots:
     void saveStages();
     void setTime();
     void propagateModel(QAbstractTableModel*);
+    void setLcdWidthForTime(int);
 
 signals:
     void newID(unsigned int);

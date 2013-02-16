@@ -35,6 +35,7 @@ public:
 public slots:
 //    void triggerId();
 //    void triggerPort();
+    void setLcdWidthForTime(int);
 
 signals:
     void newID(unsigned int);

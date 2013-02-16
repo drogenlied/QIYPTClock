@@ -98,7 +98,7 @@ void BroadcastClient::processDatagrams(){
 QString BroadcastClient::toString(){
     QTime tmp = QTime(0,0,0,0);
     tmp = tmp.addMSecs(time);
-    QString s = tmp.toString("mm:ss");
+    QString s = tmp.toString("hh:mm:ss");
     //s.chop(2);
     return s;
 }

@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     thc = new ThemeClock();
 
     connect(thc, SIGNAL(timeUpdate(int)), ui->graphicsView, SLOT(setTime(int)));
+    connect(thc, SIGNAL(timeUpdate(int)), this, SLOT(setLcdWidthForTime(int)));
     connect(thc, SIGNAL(allowedTimeChanged(int)), ui->graphicsView, SLOT(setAllowedTime(int)));
     connect(thc, SIGNAL(started(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(thc, SIGNAL(paused(int)), ui->graphicsView, SLOT(setTime(int)));
@@ -228,3 +229,10 @@ void MainWindow::propagateModel(QAbstractTableModel* mdl){
     ui->tableView->setModel(mdl);
 }
 
+void MainWindow::setLcdWidthForTime(int time){
+    if (time < 0) return;
+    else if (time < 600000) ui->lcdNumber->setDigitCount(4);
+    else if (time < 3600000) ui->lcdNumber->setDigitCount(5);
+    else if (time < 36000000) ui->lcdNumber->setDigitCount(7);
+    else ui->lcdNumber->setDigitCount(8);
+}
