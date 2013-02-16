@@ -1,16 +1,1 @@
-1000	0	Waiting for start of stage	0	0	0	1
-60000	0	The Opponent challenges the Reporter for the problem	0	0	0	0
-60000	0	The Reporter accepts or rejects the challenge 	0	0	0	0
-300000	0	Preparation of the Reporter	0	0	0	0
-720000	0	Presentation of the report 	0	0	0	0
-120000	0	Questions of the Opponent to the Reporter	0	0	0	0
-180000	0	Preparation of the Opponent 	0	0	0	0
-240000	0	The Opponent takes the floor	0	0	1	0
-840000	0	Discussion between the Reporter and the Opponent 	0	0	0	0
-60000	0	The Opponent summarizes the discussion	0	0	0	0
-180000	0	Questions of the Reviewer to the Reporter	0	0	0	0
-120000	0	Preparation of the Reviewer	0	0	0	0
-240000	0	The Reviewer takes the floor	0	0	0	0
-120000	0	Concluding remarks of the Reporter	0	0	0	0
-300000	0	Questions of the Jury	0	0	0	0
-1000	0	Physics fight has ended	0	0	0	1
+stages.gypt13sem1tag1.txt
