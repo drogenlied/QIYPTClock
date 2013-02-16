@@ -69,6 +69,10 @@ void ThemeClock::setOverTime(int ms){
 
 }
 
+void ThemeClock::getElapsedOverTime(){
+    emit elapsedOverTime(t->elapsed() - maxtime);
+}
+
 void ThemeClock::setRemainingTime(int ms){
     if (ms > 0 && ms <= maxtime)
     {

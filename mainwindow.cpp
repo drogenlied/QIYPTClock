@@ -119,6 +119,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(lc, SIGNAL(elapsedTimeChanged(int)), thc, SLOT(setElapsedTime(int)));
     connect(lc, SIGNAL(elapsedTimeChanged(int)), ui->graphicsView, SLOT(setTime(int)));
     connect(lc, SIGNAL(elapsedTimeChanged(int)), bs, SLOT(updateTime(int)));
+    connect(lc, SIGNAL(getElapsedOverTime()), thc, SLOT(getElapsedOverTime()));
+    connect(thc, SIGNAL(elapsedOverTime(int)), lc, SLOT(setElapsedOverTime(int)));
 
     if (noconfig)
       {

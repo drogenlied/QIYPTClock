@@ -38,7 +38,15 @@ void ListController::forward(){
         currentIndex++;
         stlm->setHighlightedRow(currentIndex);
         Stage st = stlm->getList().value(currentIndex);
-        if (!stlm->getList().value(currentIndex-1).carry) emit resetTime();
+        Stage lastst = stlm->getList().value(currentIndex-1);
+        if (!lastst.carry) {
+            if (lastst.ocarry) {
+                emit getElapsedOverTime();
+            }
+            else {
+                emit resetTime();
+            }
+        }
         if (st.roomclock) emit endOfStage();
         emit allowedTimeChanged(tmpt.msecsTo(st.duration));
         emit overTimeChanged(tmpt.msecsTo(st.overtime));
@@ -77,6 +85,11 @@ void ListController::handleOvertime(int over){
     if (!st.carry && st.ocarry){
         emit elapsedTimeChanged(over);
     }
+}
+
+void ListController::setElapsedOverTime(int over){
+    if (over < 0) over = 0;
+    emit elapsedTimeChanged(over);
 }
 
 int ListController::loadListFromFile(QString path){

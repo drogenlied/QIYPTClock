@@ -41,6 +41,7 @@ signals:
     void paused(int);
     void stopped(int);
     void restarted(int);
+    void elapsedOverTime(int);
 
 public slots:
     void startorpause();
@@ -51,6 +52,7 @@ public slots:
     void setElapsedTime(int ms);
     void setRemainingTime(int ms);
     void pulse();
+    void getElapsedOverTime();
 
 private:
     QTime *t;

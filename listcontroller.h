@@ -45,6 +45,7 @@ signals:
     void modelChanged(QAbstractTableModel*);
     void endOfStage();
     void roomClockChanged(bool);
+    void getElapsedOverTime();
 
 public slots:
     void forward();
@@ -53,6 +54,7 @@ public slots:
     void add();
     void del(QModelIndex ind);
     void checkAutoStart();
+    void setElapsedOverTime(int);
 
 private:
     StageListModel* stlm;
