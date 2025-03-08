@@ -19,6 +19,7 @@
 #define AUTOSAVE_H
 
 #include <QObject>
+#include <QFuture>
 
 class MainWindow;
 
@@ -26,7 +27,7 @@ class AutoSave : public QObject
 {
     Q_OBJECT
 public:
-    explicit AutoSave(MainWindow *mw, QString dest, QObject *parent = 0);
+    AutoSave(MainWindow *mw, QString dest, QObject *parent = 0);
     void load();
     int getLastSavedTime();
     
@@ -39,7 +40,7 @@ private:
     MainWindow *mw;
     QString dest;
     int lastsavedtime;
-    void writeToDisk(int step, int time);
+    QFuture<void> saveJob;
 };
 
 #endif // AUTOSAVE_H

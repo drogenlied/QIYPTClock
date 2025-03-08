@@ -1,8 +1,12 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-06-10T14:15:18
 # -------------------------------------------------
-QT += svg \
-    phonon \
+QT += core \
+    gui \
+    widgets \
+    concurrent \
+    svg \
+    svgwidgets \
     network
 TARGET = iyptclock
 TEMPLATE = app

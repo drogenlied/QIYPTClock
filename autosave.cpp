@@ -23,14 +23,8 @@
 #include "themeclock.h"
 #include "mainwindow.h"
 
-AutoSave::AutoSave(MainWindow *mw, QString dest, QObject *parent) :
-    QObject(parent)
-{
-    this->mw = mw;
-    this->dest = dest;
-    this->lastsavedtime = 0;
-}
-void AutoSave::writeToDisk(int step, int time)
+
+void writeToDisk(QString dest, int step, int time)
 {
     QFile file(dest);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -42,6 +36,15 @@ void AutoSave::writeToDisk(int step, int time)
     file.close();
 }
 
+AutoSave::AutoSave(MainWindow *mw, QString dest, QObject *parent) :
+    QObject(parent)
+{
+    this->mw = mw;
+    this->dest = dest;
+    this->lastsavedtime = 0;
+    saveJob = QFuture<void>();
+}
+
 void AutoSave::save()
 {
     int current = mw->lc->getCurrentIndex();
@@ -49,7 +52,7 @@ void AutoSave::save()
     if ( time/1000 > 15 ){ // only save times larger than 20s (this allows to revert a double-skip)
         lastsavedtime = mw->thc->getElapsedTime();
     }
-    QtConcurrent::run(this, &AutoSave::writeToDisk, current, time);
+    saveJob = QtConcurrent::run(writeToDisk, dest, current, time);
 }
 
 void AutoSave::load()

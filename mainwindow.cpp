@@ -19,39 +19,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFile>
-#include <tclap/CmdLine.h>
-#include <string>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, QHostAddress hostAddress, unsigned int port, unsigned int sig, bool noconfig) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    unsigned int sig = 123456;
-    unsigned int port = 54545;
-    std::string addressString = "255.255.255.255";
-    bool noconfig = false;
-
-    try {
-        TCLAP::CmdLine cmd("iyptclock", ' ', "0.9");
-        TCLAP::ValueArg<unsigned int> portArg("p", "port","Port to listen on", false, 54545, "unsigned integer");
-        TCLAP::ValueArg<unsigned int> sigArg("s", "signature","Signature to use", false, 123456 , "unsigned integer");
-        TCLAP::ValueArg<std::string> bcastArg("b", "broadcast","Broadcast address to send packets to", false, "255.255.255.255", "ip address");
-        TCLAP::SwitchArg noconfigArg("n", "noconfig", "disable configuration", false);
-
-        cmd.add( portArg );
-        cmd.add( sigArg );
-        cmd.add( bcastArg );
-        cmd.add( noconfigArg );
-        cmd.parse( QApplication::argc(), QApplication::argv() );
-
-        port = portArg.getValue();
-        sig = sigArg.getValue();
-        addressString = bcastArg.getValue();
-        noconfig = noconfigArg.getValue();
-
-    } catch (TCLAP::ArgException &e) {
-        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
-    }
 
     ui->setupUi(this);
 
@@ -104,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->portBox->setValue(port);
     ui->idBox->setValue(sig);
 
-    bs = new BroadcastServer(this, QHostAddress(addressString.c_str()), port, sig);
+    bs = new BroadcastServer(this, hostAddress, port, sig);
 
     connect(thc, SIGNAL(timeUpdate(int)), bs, SLOT(updateTime(int)));
     connect(thc, SIGNAL(restarted(int)), bs, SLOT(updateTime(int)));

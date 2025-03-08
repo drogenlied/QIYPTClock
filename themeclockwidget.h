@@ -19,11 +19,11 @@
 #ifndef THEMECLOCKWIDGET_H
 #define THEMECLOCKWIDGET_H
 
-#include <QtGui/QGraphicsView>
-#include <QtGui/QGraphicsScene>
-#include <QtSvg/QSvgRenderer>
-#include <QtSvg/QGraphicsSvgItem>
-#include <QtGui/QGraphicsEllipseItem>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QSvgRenderer>
+#include <QGraphicsSvgItem>
+#include <QGraphicsEllipseItem>
 
 class ThemeClockWidget : public QGraphicsView
 {

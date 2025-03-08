@@ -19,8 +19,9 @@
 #define THEMECLOCK_H
 
 #include <QObject>
-#include <QtCore/QTime>
-#include <QtCore/QTimer>
+#include <QTime>
+#include <QElapsedTimer>
+#include <QTimer>
 
 class ThemeClock : public QObject
 {
@@ -55,8 +56,9 @@ public slots:
     void getElapsedOverTime();
 
 private:
-    QTime *t;
+    QElapsedTimer *t;
     QTimer *renew;
+    int addedtime;
     int maxtime;
     int overtime;
     int savedtime;
