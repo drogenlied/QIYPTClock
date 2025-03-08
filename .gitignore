@@ -5,4 +5,6 @@ moc_*.h
 ui_*.h
 qrc_*.cpp
 iyptclock
+iyptclockclient/iyptclockclient
+multiclockclient/multiclockclient
 Makefile
