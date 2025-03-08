@@ -18,31 +18,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "broadcastclient.h"
-#include <QtCore/QTimer>
-#include <tclap/CmdLine.h>
+#include <QTimer>
 
-
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(unsigned int port, unsigned int sig, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {   
-    unsigned int sig = 123456, port = 54545;
-    try {
-        TCLAP::CmdLine cmd("iyptclockclient", ' ', "0.9");
-        TCLAP::ValueArg<unsigned int> portArg("p","port","Port to listen on",false, 54545,"unsigned integer");
-        TCLAP::ValueArg<unsigned int> sigArg("s","signature","Signature to use",false, 123456 ,"unsigned integer");
-
-        cmd.add( portArg );
-        cmd.add( sigArg );
-        cmd.parse( QApplication::argc(), QApplication::argv() );
-
-        port = portArg.getValue();
-        sig = sigArg.getValue();
-
-    } catch (TCLAP::ArgException &e) {
-        std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
-    }
-
     ui->setupUi(this);
 //    connect(ui->portButton, SIGNAL(clicked()), this, SLOT(triggerPort()));
 //    connect(ui->idButton, SIGNAL(clicked()), this, SLOT(triggerId()));
